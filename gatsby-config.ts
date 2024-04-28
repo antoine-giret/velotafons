@@ -1,27 +1,38 @@
-import type { GatsbyConfig } from "gatsby";
+import type { GatsbyConfig } from 'gatsby';
 
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Vélotafons`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://velotafons.fr`,
   },
-  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
-  // If you use VSCode you can also use the GraphQL plugin
-  // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: [{
-    resolve: 'gatsby-source-datocms',
-    options: {
-      "apiToken": "313c8a869b6e59eb3e07a88b17e580"
-    }
-  }, "gatsby-plugin-image", "gatsby-plugin-sharp", "gatsby-transformer-sharp", "gatsby-plugin-theme-ui", "gatsby-plugin-sitemap", {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "images",
-      "path": "./src/images/"
+  plugins: [
+    {
+      resolve: 'gatsby-source-datocms',
+      options: {
+        'apiToken': '313c8a869b6e59eb3e07a88b17e580',
+      },
     },
-    __key: "images"
-  }]
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-theme-ui',
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        'name': 'images',
+        'path': './src/images/',
+      },
+      __key: 'images',
+    },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        "icon": "src/images/logo.svg",
+      },
+    },
+  ],
 };
 
 export default config;
