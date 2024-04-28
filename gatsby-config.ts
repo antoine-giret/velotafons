@@ -10,7 +10,7 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-datocms',
       options: {
-        'apiToken': '313c8a869b6e59eb3e07a88b17e580',
+        apiToken: '313c8a869b6e59eb3e07a88b17e580',
       },
     },
     'gatsby-plugin-image',
@@ -21,15 +21,15 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        'name': 'images',
-        'path': './src/images/',
+        name: 'images',
+        path: './src/images/',
       },
       __key: 'images',
     },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        "icon": "src/images/logo.svg",
+        icon: 'src/images/logo.svg',
       },
     },
   ],

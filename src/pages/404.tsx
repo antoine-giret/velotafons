@@ -1,16 +1,12 @@
-import * as React from "react"
-import { PageProps, HeadProps } from "gatsby"
+import { HeadProps, PageProps } from 'gatsby';
+import * as React from 'react';
 
 function NotFoundPage({}: PageProps) {
-  return (
-    <></>
-  );
+  return <></>;
 }
 
 export default NotFoundPage;
 
 export function Head({}: HeadProps) {
-  return (
-    <title>Page introuvable</title>
-  );
+  return <title>Page introuvable</title>;
 }

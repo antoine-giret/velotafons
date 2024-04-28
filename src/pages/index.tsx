@@ -1,16 +1,12 @@
-import * as React from 'react';
 import type { HeadProps, PageProps } from 'gatsby';
+import * as React from 'react';
 
 function IndexPage({}: PageProps) {
-  return (
-    <></>
-  );
+  return <></>;
 }
 
 export default IndexPage;
 
 export function Head({}: HeadProps) {
-  return (
-    <title>Vélotafons !</title>
-  );
+  return <title>Vélotafons !</title>;
 }
