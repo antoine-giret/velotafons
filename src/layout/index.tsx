@@ -5,7 +5,7 @@ import React from 'react';
 import Footer from './footer';
 import Header from './header';
 
-function Layout({}: WrapPageElementBrowserArgs): JSX.Element {
+function Layout({ element }: WrapPageElementBrowserArgs): JSX.Element {
   return (
     <Box
       display="flex"
@@ -17,7 +17,7 @@ function Layout({}: WrapPageElementBrowserArgs): JSX.Element {
       }}
     >
       <Header />
-      <Box flexGrow={1} />
+      <Box flexGrow={1}>{element}</Box>
       <Footer />
     </Box>
   );
