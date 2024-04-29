@@ -1,16 +1,23 @@
 import { ButtonProps, Button as ChakraButton } from '@chakra-ui/react';
 import { Link } from 'gatsby';
-import React, { ReactNode } from 'react';
+import React, { ReactElement, ReactNode, RefObject } from 'react';
 
 export function Button({
+  buttonRef,
+  LeftIcon,
   children,
   ...props
-}: { children: ReactNode } & ({ link: true; to: string } | { onClick: () => void })): JSX.Element {
+}: {
+  buttonRef?: RefObject<HTMLButtonElement>;
+  children: ReactNode;
+  LeftIcon?: ReactElement;
+} & ({ link: true; to: string } | { onClick: () => void })): JSX.Element {
   const commonsProps: ButtonProps = {
     _active: { bgColor: 'rgba(255, 255, 255, 0.2)' },
     _hover: { bgColor: 'rgba(255, 255, 255, 0.1)' },
     color: '#fff',
     fontSize: 'md',
+    leftIcon: LeftIcon,
     size: 'sm',
     variant: 'ghost',
   };
@@ -24,7 +31,7 @@ export function Button({
   }
 
   return (
-    <ChakraButton {...commonsProps} onClick={props.onClick}>
+    <ChakraButton {...commonsProps} onClick={props.onClick} ref={buttonRef}>
       {children}
     </ChakraButton>
   );

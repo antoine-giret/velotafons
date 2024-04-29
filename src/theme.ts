@@ -1,7 +1,7 @@
 import { theme as chakraTheme, extendBaseTheme } from '@chakra-ui/react';
 import '@fontsource/nunito-sans';
 
-const { Button } = chakraTheme.components;
+const { Button, Drawer } = chakraTheme.components;
 
 const theme = extendBaseTheme({
   fonts: {
@@ -23,6 +23,7 @@ const theme = extendBaseTheme({
   },
   components: {
     Button,
+    Drawer,
   },
 });
 
