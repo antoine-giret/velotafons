@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Hero from '../components/hero';
 import KeyNumbers from '../components/key-numbers';
@@ -9,23 +9,21 @@ type TEle = {
   index: number;
 };
 
-export function useContent({ data }: { data: Queries.HomeQueryFragment | null }) {
-  const [elements, setElements] = useState<Array<TEle>>();
-
-  function getElement(
-    block: Queries.HeroFragment | Queries.KeyNumbersFragment,
-  ): { data: { id: string }; Ele: (props: { data: { id: string } }) => JSX.Element } | null {
-    switch (block.internal.type) {
-      case 'DatoCmsHero':
-        return { Ele: Hero as never, data: block };
-      case 'DatoCmsKeyNumbersBlock':
-        return { Ele: KeyNumbers as never, data: block };
-      default:
-        return null;
-    }
+function getElement(
+  block: Queries.HeroFragment | Queries.KeyNumbersFragment,
+): { data: { id: string }; Ele: (props: { data: { id: string } }) => JSX.Element } | null {
+  switch (block.internal.type) {
+    case 'DatoCmsHero':
+      return { Ele: Hero as never, data: block };
+    case 'DatoCmsKeyNumbersBlock':
+      return { Ele: KeyNumbers as never, data: block };
+    default:
+      return null;
   }
+}
 
-  useEffect(() => {
+export function useContent({ data }: { data: Queries.HomeQueryFragment | null }) {
+  const [elements] = useState<Array<TEle>>(() => {
     const _elements = Object.values(data || {})
       .reduce<Array<TEle>>((res, block) => {
         if (block) {
@@ -61,8 +59,8 @@ export function useContent({ data }: { data: Queries.HomeQueryFragment | null })
       }, [])
       .sort((a, b) => a.index - b.index);
 
-    setElements(_elements);
-  }, []);
+    return _elements;
+  });
 
   return { elements };
 }
