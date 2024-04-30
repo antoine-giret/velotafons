@@ -1,20 +1,20 @@
 import { ButtonProps, Button as ChakraButton } from '@chakra-ui/react';
 import { Link } from 'gatsby';
-import React, { ReactElement, ReactNode, RefObject } from 'react';
+import React, { ReactNode, RefObject } from 'react';
 
 export function Button({
   buttonRef,
   colorScheme,
   size,
-  LeftIcon,
+  variant,
   children,
   ...props
 }: {
   buttonRef?: RefObject<HTMLButtonElement>;
   colorScheme: 'whiteAlpha' | 'primary';
   children: ReactNode;
-  LeftIcon?: ReactElement;
-  size?: 'md';
+  size?: 'md' | 'lg';
+  variant?: string;
 } & (
   | { externalLink: true; href: string }
   | { link: true; to: string }
@@ -22,7 +22,6 @@ export function Button({
 )): JSX.Element {
   let commonsProps: ButtonProps = {
     fontSize: 'md',
-    leftIcon: LeftIcon,
     size: size || 'sm',
   };
 
@@ -35,7 +34,10 @@ export function Button({
       variant: 'ghost',
     };
   } else {
-    commonsProps.colorScheme = colorScheme;
+    commonsProps = {
+      colorScheme,
+      variant: variant === 'outlined' ? 'outline' : 'solid',
+    };
   }
 
   if ('externalLink' in props) {

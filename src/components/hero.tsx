@@ -46,8 +46,8 @@ function Hero({
         sx={
           height === 'fill_view'
             ? {
-                minHeight: 'calc(100vh - 54px)',
-                '&': { minHeight: 'calc(100dvh - 54px)' },
+                minHeight: 'calc(100vh - 160px)',
+                '&': { minHeight: 'calc(100dvh - 160px)' },
               }
             : {}
         }
@@ -77,7 +77,7 @@ function Hero({
               (link) =>
                 link &&
                 ('to' in link ? (
-                  <Button link colorScheme="primary" key={link.id} size="md" to={link.to || '/'}>
+                  <Button link colorScheme="primary" key={link.id} size="lg" to={link.to || '/'}>
                     {link.label}
                   </Button>
                 ) : (
@@ -87,7 +87,7 @@ function Hero({
                       colorScheme="primary"
                       href={link.href}
                       key={link.id}
-                      size="md"
+                      size="lg"
                     >
                       {link.label}
                     </Button>
@@ -105,6 +105,10 @@ export default Hero;
 
 export const query = graphql`
   fragment Hero on DatoCmsHero {
+    id
+    internal {
+      type
+    }
     backgroundImage {
       alt
       gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)

@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'gatsby';
 import React, { useRef } from 'react';
-import { IoMenu } from 'react-icons/io5';
 
 import { Button, IconButton } from '../components';
 import icon from '../images/icon-inline.svg';
@@ -56,12 +55,7 @@ function Header(): JSX.Element {
           ))}
         </Box>
         <Box display={['block', 'block', 'none']}>
-          <Button
-            buttonRef={menuButtonRef}
-            colorScheme="whiteAlpha"
-            LeftIcon={<IoMenu />}
-            onClick={onMenuOpen}
-          >
+          <Button buttonRef={menuButtonRef} colorScheme="whiteAlpha" onClick={onMenuOpen}>
             Menu
           </Button>
         </Box>
