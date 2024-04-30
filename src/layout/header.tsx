@@ -33,7 +33,12 @@ function Header(): JSX.Element {
         gap={3}
         height={54}
         justifyContent="space-between"
+        left={0}
         paddingX={3}
+        position="fixed"
+        top={0}
+        width="100%"
+        zIndex={1300}
       >
         <Link to="/">
           <img alt="Logo Vélotafons !" height="32px" src={icon} />
@@ -42,7 +47,7 @@ function Header(): JSX.Element {
           {links
             .filter(({ key }) => key !== 'home')
             .map(({ key, to, label }) => (
-              <Button link key={key} to={to}>
+              <Button link colorScheme="whiteAlpha" key={key} to={to}>
                 {label}
               </Button>
             ))}
@@ -51,11 +56,17 @@ function Header(): JSX.Element {
           ))}
         </Box>
         <Box display={['block', 'block', 'none']}>
-          <Button buttonRef={menuButtonRef} LeftIcon={<IoMenu />} onClick={onMenuOpen}>
+          <Button
+            buttonRef={menuButtonRef}
+            colorScheme="whiteAlpha"
+            LeftIcon={<IoMenu />}
+            onClick={onMenuOpen}
+          >
             Menu
           </Button>
         </Box>
       </Box>
+      <Box height={54} width="100%" />
       <Drawer
         finalFocusRef={menuButtonRef}
         isOpen={isMenuOpen}
