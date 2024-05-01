@@ -123,17 +123,11 @@ export const query = graphql`
       caption
     }
     links {
-      ... on DatoCmsExternalLinkCopy {
-        id
-        href
-        label
-        variant
-      }
       ... on DatoCmsLink {
-        id
-        to
-        label
-        variant
+        ...Link
+      }
+      ... on DatoCmsExternalLinkCopy {
+        ...ExternalLink
       }
     }
   }

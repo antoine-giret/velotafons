@@ -104,6 +104,18 @@ function Hero({
 export default Hero;
 
 export const query = graphql`
+  fragment Link on DatoCmsLink {
+    id
+    label
+    to
+    variant
+  }
+  fragment ExternalLink on DatoCmsExternalLinkCopy {
+    id
+    label
+    href
+    variant
+  }
   fragment Hero on DatoCmsHero {
     id
     internal {
@@ -119,14 +131,10 @@ export const query = graphql`
     align
     links {
       ... on DatoCmsLink {
-        id
-        to
-        label
+        ...Link
       }
       ... on DatoCmsExternalLinkCopy {
-        id
-        href
-        label
+        ...ExternalLink
       }
     }
   }
