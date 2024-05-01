@@ -46,8 +46,8 @@ function Hero({
         sx={
           height === 'fill_view'
             ? {
-                minHeight: 'calc(100vh - 160px)',
-                '&': { minHeight: 'calc(100svh - 160px)' },
+                minHeight: 'calc(100vh - 200px)',
+                '&': { minHeight: 'calc(100svh - 200px)' },
               }
             : {}
         }

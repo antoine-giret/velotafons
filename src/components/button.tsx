@@ -36,6 +36,7 @@ export function Button({
   } else {
     commonsProps = {
       colorScheme,
+      color: variant === 'outlined' ? 'primary.500' : undefined,
       variant: variant === 'outlined' ? 'outline' : 'solid',
     };
   }
