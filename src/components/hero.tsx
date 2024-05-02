@@ -124,6 +124,7 @@ export const query = graphql`
     backgroundImage {
       alt
       gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)
+      url
     }
     title
     subtitle

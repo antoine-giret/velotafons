@@ -67,8 +67,26 @@ function IndexPage({
 
 export default IndexPage;
 
-export function Head({}: HeadProps) {
-  return <title>Vélotafons !</title>;
+export function Head({ data: { site, datoCmsHome } }: HeadProps<Queries.HomeQuery>) {
+  const _description = datoCmsHome?.hero?.subtitle;
+  const description =
+    _description && _description.length > 160
+      ? `${_description.substring(0, 157)}...`
+      : _description;
+  const url = site?.siteMetadata?.siteUrl;
+  const imageUrl = datoCmsHome?.hero?.backgroundImage?.url;
+
+  return (
+    <>
+      <title>Vélotafons !</title>
+      {description && <meta content={description} name="description" />}
+      <meta content="Vélotafons !" property="og:title" />
+      {description && <meta content={description} property="og:description" />}
+      <meta content="website" property="og:type" />
+      {url && <meta content={url} property="og:url" />}
+      {imageUrl && <meta content={imageUrl} property="og:image" />}
+    </>
+  );
 }
 
 export const query = graphql`
@@ -106,6 +124,11 @@ export const query = graphql`
     }
   }
   query Home {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     datoCmsHome {
       ...HomeQuery
     }
