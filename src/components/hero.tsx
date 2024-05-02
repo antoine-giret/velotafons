@@ -110,7 +110,7 @@ export const query = graphql`
     to
     variant
   }
-  fragment ExternalLink on DatoCmsExternalLinkCopy {
+  fragment ExternalLink on DatoCmsExternalLink {
     id
     label
     href
@@ -134,7 +134,7 @@ export const query = graphql`
       ... on DatoCmsLink {
         ...Link
       }
-      ... on DatoCmsExternalLinkCopy {
+      ... on DatoCmsExternalLink {
         ...ExternalLink
       }
     }

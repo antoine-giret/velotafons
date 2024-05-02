@@ -6,7 +6,6 @@ import KeyNumbers from '../components/key-numbers';
 type TEle = {
   data: { id: string };
   Ele: (props: { data: { id: string } }) => JSX.Element;
-  index: number;
 };
 
 function getElement(
@@ -22,42 +21,31 @@ function getElement(
   }
 }
 
-export function useContent({ data }: { data: Queries.HomeQueryFragment | null }) {
+export function useContent({
+  data,
+}: {
+  data: Queries.HomeQueryFragment | Queries.MissionQueryFragment | null;
+}) {
   const [elements] = useState<Array<TEle>>(() => {
-    const _elements = Object.values(data || {})
-      .reduce<Array<TEle>>((res, block) => {
-        if (block) {
-          if (Array.isArray(block)) {
-            res.push(
-              ...block.reduce<Array<TEle>>((res2, subBlock) => {
-                const ele = getElement(subBlock);
-                if (ele)
-                  res2.push({
-                    ...ele,
-                    index: 'order' in block && typeof block.order === 'number' ? block.order : 1001,
-                  });
+    const _elements = Object.values(data || {}).reduce<Array<TEle>>((res, block) => {
+      if (block) {
+        if (Array.isArray(block)) {
+          res.push(
+            ...block.reduce<Array<TEle>>((res2, subBlock) => {
+              const ele = getElement(subBlock);
+              if (ele) res2.push(ele);
 
-                return res2;
-              }, []),
-            );
-          } else if ('id' in block) {
-            const ele = getElement(block);
-            if (ele)
-              res.push({
-                ...ele,
-                index:
-                  block.internal.type === 'DatoCmsHero'
-                    ? 0
-                    : 'order' in block && typeof block.order === 'number'
-                      ? block.order
-                      : 1001,
-              });
-          }
+              return res2;
+            }, []),
+          );
+        } else if ('id' in block) {
+          const ele = getElement(block);
+          if (ele) res.push(ele);
         }
+      }
 
-        return res;
-      }, [])
-      .sort((a, b) => a.index - b.index);
+      return res;
+    }, []);
 
     return _elements;
   });

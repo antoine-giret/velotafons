@@ -174,7 +174,7 @@ export const query = graphql`
       ... on DatoCmsLink {
         ...Link
       }
-      ... on DatoCmsExternalLinkCopy {
+      ... on DatoCmsExternalLink {
         ...ExternalLink
       }
     }

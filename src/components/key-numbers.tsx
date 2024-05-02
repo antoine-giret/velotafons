@@ -2,11 +2,11 @@ import { Box, Icon as ChakraIcon, Heading, Text } from '@chakra-ui/react';
 import { graphql } from 'gatsby';
 import React, { Fragment } from 'react';
 import { IconType } from 'react-icons';
-import { IoBicycle, IoLogoInstagram, IoLogoLinkedin, IoPeople } from 'react-icons/io5';
+import { IoBicycle, IoLeaf, IoLogoInstagram, IoLogoLinkedin, IoPeople } from 'react-icons/io5';
 
 import { Button } from './button';
 
-const keys = ['instagram', 'linkedin', 'members', 'distance'] as const;
+const keys = ['instagram', 'linkedin', 'members', 'distance', 'saved_co2'] as const;
 
 export type TKey = (typeof keys)[number];
 
@@ -15,6 +15,7 @@ const keyNumberMap: { [key in TKey]: { Icon: IconType } } = {
   instagram: { Icon: IoLogoInstagram },
   linkedin: { Icon: IoLogoLinkedin },
   members: { Icon: IoPeople },
+  saved_co2: { Icon: IoLeaf },
 };
 
 function KeyNumbers({
@@ -39,7 +40,7 @@ function KeyNumbers({
       </Heading>
       {description && <Text textAlign="center">{description}</Text>}
       {keyNumbers && keyNumbers.length > 0 && (
-        <Box display="flex" flexWrap="wrap" gap={5} width="100%">
+        <Box display="flex" flexWrap="wrap" gap={5} justifyContent="center" width="100%">
           {keyNumbers.map((keyNumber, index) => {
             if (!keyNumber) return <Fragment key={index} />;
 
@@ -127,7 +128,7 @@ export const query = graphql`
       ... on DatoCmsLink {
         ...Link
       }
-      ... on DatoCmsExternalLinkCopy {
+      ... on DatoCmsExternalLink {
         ...ExternalLink
       }
     }
