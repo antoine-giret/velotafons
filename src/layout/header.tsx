@@ -25,6 +25,7 @@ function Header(): JSX.Element {
     <>
       <Box
         alignItems="center"
+        as="header"
         bgColor="primary.500"
         display="flex"
         flexDirection="row"

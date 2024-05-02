@@ -23,6 +23,7 @@ function Card({
     <Box
       alignItems="flex-start"
       alignSelf="center"
+      as="section"
       display="flex"
       flexDirection={['column', 'column', imagePosition === 'left' ? 'row' : 'row-reverse']}
       gap={5}

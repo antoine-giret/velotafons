@@ -12,6 +12,7 @@ const now = new Date();
 function Footer(): JSX.Element {
   return (
     <Box
+      as="footer"
       bgColor="#333333"
       color="#fff"
       display="flex"

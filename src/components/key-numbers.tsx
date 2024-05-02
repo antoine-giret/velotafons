@@ -26,6 +26,7 @@ function KeyNumbers({
     <Box
       alignItems="center"
       alignSelf="center"
+      as="section"
       display="flex"
       flexDirection="column"
       gap={5}
