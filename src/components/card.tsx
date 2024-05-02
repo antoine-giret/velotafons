@@ -8,6 +8,7 @@ function Card({
   imageAlt,
   tag,
   title,
+  subtitle,
   description,
   actions,
 }: {
@@ -16,6 +17,7 @@ function Card({
   image: IGatsbyImageData;
   imageAlt: string;
   imagePosition: 'left' | 'right';
+  subtitle?: JSX.Element;
   tag?: string;
   title: string;
 }): JSX.Element {
@@ -44,6 +46,7 @@ function Card({
           <Heading as="h2" fontSize="2xl" fontWeight={700}>
             {title}
           </Heading>
+          {subtitle}
           {description && (
             <Text
               as="div"

@@ -1,7 +1,9 @@
+import { Box, Icon, Text } from '@chakra-ui/react';
 import type { HeadProps, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
 import React, { Fragment, useState } from 'react';
+import { IoLocation, IoToday } from 'react-icons/io5';
 import showdown from 'showdown';
 
 import { Button } from '../components';
@@ -12,9 +14,10 @@ import { useContent } from '../hooks';
 const converter = new showdown.Converter();
 
 function IndexPage({
-  data: { datoCmsHome, allDatoCmsPortrait, datoCmsGoodAddressesBlock },
+  data: { datoCmsHome, allDatoCmsPortrait, datoCmsGoodAddressesBlock, allDatoCmsEvent },
 }: PageProps<Queries.HomeQuery>) {
   const [portraits] = useState(allDatoCmsPortrait.nodes.filter(({ picture }) => picture));
+  const [events] = useState(allDatoCmsEvent.nodes.filter(({ image }) => image));
   const { elements } = useContent({ data: datoCmsHome });
 
   if (!datoCmsHome) return <></>;
@@ -61,6 +64,67 @@ function IndexPage({
           imagePosition={portraits.length % 2 === 1 ? 'left' : 'right'}
         />
       )}
+      {events.length > 0 &&
+        events.map(
+          ({ slug, title, startDate, endDate, location, image: _image, description }, index) => {
+            const image = _image && getImage(_image);
+            if (!image) return <Fragment key={slug} />;
+
+            return (
+              <Card
+                actions={
+                  <>
+                    <Button link colorScheme="primary" size="md" to={`/events/${slug}`}>
+                      Voir l'évènement
+                    </Button>
+                    <Button link colorScheme="primary" size="md" to={`/events`} variant="outlined">
+                      Découvrez tous les évènements
+                    </Button>
+                  </>
+                }
+                description={description ? converter.makeHtml(description) : undefined}
+                image={image}
+                imageAlt={_image.alt || ''}
+                imagePosition={(portraits.length + index) % 2 === 0 ? 'left' : 'right'}
+                key={slug}
+                subtitle={
+                  <Box display="flex" flexDirection="column" gap={1}>
+                    {startDate && (
+                      <Box alignItems="center" display="flex" gap={1}>
+                        <Icon as={IoToday} color="primary.500" fontSize="sm" />
+                        <Text color="grey" fontSize="sm">
+                          {endDate
+                            ? `Du ${new Intl.DateTimeFormat('fr-FR', {
+                                dateStyle: 'medium',
+                              }).format(new Date(startDate))} au ${new Intl.DateTimeFormat(
+                                'fr-FR',
+                                {
+                                  dateStyle: 'medium',
+                                },
+                              ).format(new Date(endDate))}`
+                            : `${new Intl.DateTimeFormat('fr-FR', {
+                                dateStyle: 'medium',
+                                timeStyle: 'medium',
+                              }).format(new Date(startDate))}`}
+                        </Text>
+                      </Box>
+                    )}
+                    {location && (
+                      <Box alignItems="center" display="flex" gap={1}>
+                        <Icon as={IoLocation} color="primary.500" fontSize="sm" />
+                        <Text color="grey" fontSize="sm">
+                          {location}
+                        </Text>
+                      </Box>
+                    )}
+                  </Box>
+                }
+                tag="Évènements"
+                title={title || ''}
+              />
+            );
+          },
+        )}
     </>
   );
 }
@@ -115,6 +179,18 @@ export const query = graphql`
       }
     }
   }
+  fragment HomeEvent on DatoCmsEvent {
+    slug
+    title
+    startDate(locale: "fr")
+    endDate(locale: "fr")
+    location
+    image {
+      gatsbyImageData(aspectRatio: 1, width: 688)
+      alt
+    }
+    description
+  }
   fragment HomeQuery on DatoCmsHome {
     hero {
       ...Hero
@@ -139,6 +215,11 @@ export const query = graphql`
     }
     datoCmsGoodAddressesBlock {
       ...HomeGoodAddressesBlock
+    }
+    allDatoCmsEvent(filter: { highlighted: { eq: true } }) {
+      nodes {
+        ...HomeEvent
+      }
     }
   }
 `;
