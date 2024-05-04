@@ -8,7 +8,7 @@ import showdown from 'showdown';
 import { Card } from './card';
 import { Links } from './links';
 
-const converter = new showdown.Converter();
+const converter = new showdown.Converter({ simpleLineBreaks: true });
 
 function HighlightedEvent({
   data: { event, imagePosition, links },

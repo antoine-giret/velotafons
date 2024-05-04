@@ -43,6 +43,9 @@ export const query = graphql`
     keyNumbersBlock {
       ...KeyNumbers
     }
+    pillars {
+      ...Cards
+    }
   }
   query Mission {
     site {

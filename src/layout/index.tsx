@@ -17,14 +17,7 @@ function Layout({ element }: WrapPageElementBrowserArgs): JSX.Element {
       }}
     >
       <Header />
-      <Box
-        as="main"
-        display="flex"
-        flexDirection="column"
-        flexGrow={1}
-        gap={[5, 8, 8]}
-        paddingBottom={5}
-      >
+      <Box as="main" display="flex" flexDirection="column" flexGrow={1} gap={[5, 8, 8]}>
         {element}
       </Box>
       <Footer />

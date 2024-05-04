@@ -31,6 +31,7 @@ export function Card({
       gap={5}
       maxWidth="100%"
       padding={5}
+      sx={{ '&:last-child': { paddingBottom: 5 } }}
       width={1000}
     >
       <Box borderRadius="16px" flexShrink={0} overflow="hidden" width={['100%', '100%', 300]}>

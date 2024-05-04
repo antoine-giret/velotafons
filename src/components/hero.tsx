@@ -6,7 +6,7 @@ import showdown from 'showdown';
 
 import { Links } from './links';
 
-const converter = new showdown.Converter();
+const converter = new showdown.Converter({ simpleLineBreaks: true });
 
 function Hero({
   data: { backgroundImage: _backgroundImage, align, height, title, subtitle, links },

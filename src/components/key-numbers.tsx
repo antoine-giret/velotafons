@@ -23,6 +23,8 @@ function KeyNumbers({
 }: {
   data: Queries.KeyNumbersFragment;
 }): JSX.Element {
+  if (!keyNumbers || keyNumbers.length === 0) return <></>;
+
   return (
     <Box
       alignItems="center"
@@ -33,44 +35,50 @@ function KeyNumbers({
       gap={5}
       maxWidth="100%"
       padding={5}
+      sx={{ '&:last-child': { paddingBottom: 5 } }}
       width={1000}
     >
       <Heading as="h2" fontSize="2xl" fontWeight={700} textAlign="center">
         {title}
       </Heading>
       {description && <Text textAlign="center">{description}</Text>}
-      {keyNumbers && keyNumbers.length > 0 && (
-        <Box display="flex" flexWrap="wrap" gap={5} justifyContent="center" width="100%">
-          {keyNumbers.map((keyNumber, index) => {
-            if (!keyNumber) return <Fragment key={index} />;
+      <Box
+        columnGap={5}
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        rowGap={[3, 5, 5]}
+        width="100%"
+      >
+        {keyNumbers.map((keyNumber, index) => {
+          if (!keyNumber) return <Fragment key={index} />;
 
-            const key = keyNumber.key as TKey;
-            if (!key || !keys.includes(key)) return <Fragment key={index} />;
+          const key = keyNumber.key as TKey;
+          if (!key || !keys.includes(key)) return <Fragment key={index} />;
 
-            const { caption } = keyNumber;
-            const { Icon } = keyNumberMap[key];
+          const { caption } = keyNumber;
+          const { Icon } = keyNumberMap[key];
 
-            return (
-              <Box
-                alignItems="center"
-                display="flex"
-                flexDirection="column"
-                gap={2}
-                key={key}
-                width={['100%', 'calc((100% - 40px) / 2)', 'calc((100% - 120px) / 4)']}
-              >
-                <ChakraIcon as={Icon} color="primary.500" fontSize="3xl" />
-                <Box alignItems="center" display="flex" flexDirection="column">
-                  <Text fontSize="3xl" fontWeight={700}>
-                    XXX
-                  </Text>
-                  <Text align="center">{caption}</Text>
-                </Box>
+          return (
+            <Box
+              alignItems="center"
+              display="flex"
+              flexDirection="column"
+              gap={2}
+              key={key}
+              width={['100%', 'calc((100% - 40px) / 2)', 'calc((100% - 120px) / 4)']}
+            >
+              <ChakraIcon as={Icon} color="primary.500" fontSize="3xl" />
+              <Box alignItems="center" display="flex" flexDirection="column">
+                <Text fontSize="3xl" fontWeight={700}>
+                  XXX
+                </Text>
+                <Text align="center">{caption}</Text>
               </Box>
-            );
-          })}
-        </Box>
-      )}
+            </Box>
+          );
+        })}
+      </Box>
       {links && <Links links={links} />}
     </Box>
   );

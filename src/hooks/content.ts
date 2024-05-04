@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Cards from '../components/cards';
 import Hero from '../components/hero';
 import HighlightedEvent from '../components/highlighted-event';
 import HighlightedPortrait from '../components/highlighted-portrait';
@@ -25,6 +26,8 @@ function getElement(
       return { Ele: ImageCard as never, data: block };
     case 'DatoCmsHighlightedEvent':
       return { Ele: HighlightedEvent as never, data: block };
+    case 'DatoCmsCardsBlock':
+      return { Ele: Cards as never, data: block };
     default:
       return null;
   }
