@@ -2,7 +2,7 @@ import { Badge, Box, Heading, Text } from '@chakra-ui/react';
 import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import React from 'react';
 
-function Card({
+export function Card({
   imagePosition,
   image,
   imageAlt,
@@ -12,7 +12,7 @@ function Card({
   description,
   actions,
 }: {
-  actions?: JSX.Element;
+  actions?: JSX.Element | null;
   description?: string;
   image: IGatsbyImageData;
   imageAlt: string;
@@ -66,5 +66,3 @@ function Card({
     </Box>
   );
 }
-
-export default Card;

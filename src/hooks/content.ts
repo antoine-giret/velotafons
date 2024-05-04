@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 import Hero from '../components/hero';
+import HighlightedEvent from '../components/highlighted-event';
+import HighlightedPortrait from '../components/highlighted-portrait';
+import ImageCard from '../components/image-card';
 import KeyNumbers from '../components/key-numbers';
 
 type TEle = {
@@ -16,6 +19,12 @@ function getElement(
       return { Ele: Hero as never, data: block };
     case 'DatoCmsKeyNumbersBlock':
       return { Ele: KeyNumbers as never, data: block };
+    case 'DatoCmsHighlightedPortrait':
+      return { Ele: HighlightedPortrait as never, data: block };
+    case 'DatoCmsImageCard':
+      return { Ele: ImageCard as never, data: block };
+    case 'DatoCmsHighlightedEvent':
+      return { Ele: HighlightedEvent as never, data: block };
     default:
       return null;
   }

@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { IconType } from 'react-icons';
 import { IoBicycle, IoLeaf, IoLogoInstagram, IoLogoLinkedin, IoPeople } from 'react-icons/io5';
 
-import { Button } from './button';
+import { Links } from './links';
 
 const keys = ['instagram', 'linkedin', 'members', 'distance', 'saved_co2'] as const;
 
@@ -71,39 +71,7 @@ function KeyNumbers({
           })}
         </Box>
       )}
-      {links && links.length > 0 && (
-        <Box columnGap={3} display="flex" flexWrap="wrap" justifyContent="center" rowGap={2}>
-          {links.map(
-            (link) =>
-              link &&
-              ('to' in link ? (
-                <Button
-                  link
-                  colorScheme="primary"
-                  key={link.id}
-                  size="md"
-                  to={link.to || '/'}
-                  variant={link.variant || undefined}
-                >
-                  {link.label}
-                </Button>
-              ) : (
-                link.href && (
-                  <Button
-                    externalLink
-                    colorScheme="primary"
-                    href={link.href}
-                    key={link.id}
-                    size="md"
-                    variant={link.variant || undefined}
-                  >
-                    {link.label}
-                  </Button>
-                )
-              )),
-          )}
-        </Box>
-      )}
+      {links && <Links links={links} />}
     </Box>
   );
 }
@@ -116,7 +84,6 @@ export const query = graphql`
     internal {
       type
     }
-    order
     title
     description
     keyNumbers {

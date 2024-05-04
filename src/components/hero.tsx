@@ -2,8 +2,11 @@ import { Box, Heading, Text } from '@chakra-ui/react';
 import { graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
+import showdown from 'showdown';
 
-import { Button } from './button';
+import { Links } from './links';
+
+const converter = new showdown.Converter();
 
 function Hero({
   data: { backgroundImage: _backgroundImage, align, height, title, subtitle, links },
@@ -64,38 +67,14 @@ function Hero({
         </Heading>
         {subtitle && (
           <Text
+            as="div"
             color={backgroundImage ? '#fff' : undefined}
+            dangerouslySetInnerHTML={{ __html: converter.makeHtml(subtitle) }}
             fontSize="lg"
             textAlign={align === 'center' ? 'center' : 'left'}
-          >
-            {subtitle}
-          </Text>
+          />
         )}
-        {links && links.length > 0 && (
-          <Box alignItems="center" display="flex" gap={3}>
-            {links.map(
-              (link) =>
-                link &&
-                ('to' in link ? (
-                  <Button link colorScheme="primary" key={link.id} size="lg" to={link.to || '/'}>
-                    {link.label}
-                  </Button>
-                ) : (
-                  link.href && (
-                    <Button
-                      externalLink
-                      colorScheme="primary"
-                      href={link.href}
-                      key={link.id}
-                      size="lg"
-                    >
-                      {link.label}
-                    </Button>
-                  )
-                )),
-            )}
-          </Box>
-        )}
+        {links && <Links links={links} size="lg" />}
       </Box>
     </Box>
   );
