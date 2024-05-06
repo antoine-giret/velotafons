@@ -14,6 +14,7 @@ function MissionPage({ data: { datoCmsMission } }: PageProps<Queries.MissionQuer
 export default MissionPage;
 
 export function Head({ data: { site, datoCmsMission } }: HeadProps<Queries.MissionQuery>) {
+  const title = [datoCmsMission?.hero?.title, 'Vélotafons !'].filter(Boolean).join(' | ');
   const _description = datoCmsMission?.hero?.subtitle;
   const description =
     _description && _description.length > 160
@@ -24,9 +25,9 @@ export function Head({ data: { site, datoCmsMission } }: HeadProps<Queries.Missi
 
   return (
     <>
-      <title>Vélotafons !</title>
+      <title>{title}</title>
       {description && <meta content={description} name="description" />}
-      <meta content="Vélotafons !" property="og:title" />
+      <meta content={title} property="og:title" />
       {description && <meta content={description} property="og:description" />}
       <meta content="website" property="og:type" />
       {url && <meta content={`${url}/mission`} property="og:url" />}
