@@ -36,7 +36,7 @@ function getElement(
 export function useContent({
   data,
 }: {
-  data: Queries.HomeQueryFragment | Queries.MissionQueryFragment | null;
+  data: Queries.HomeQueryFragment | Queries.MissionQueryFragment | Queries.BlogQueryFragment | null;
 }) {
   const [elements] = useState<Array<TEle>>(() => {
     const _elements = Object.values(data || {}).reduce<Array<TEle>>((res, block) => {

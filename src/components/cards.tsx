@@ -15,7 +15,6 @@ function Cards({ data: { title, cards } }: { data: Queries.CardsFragment }): JSX
       backgroundColor="#eee"
       display="flex"
       flexDirection="column"
-      sx={{ '&:last-child': { paddingBottom: 5 } }}
       width="100%"
     >
       <Box

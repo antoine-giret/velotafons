@@ -3,6 +3,7 @@ import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import React from 'react';
 
 export function Card({
+  variant,
   imagePosition,
   image,
   imageAlt,
@@ -16,10 +17,11 @@ export function Card({
   description?: string;
   image: IGatsbyImageData;
   imageAlt: string;
-  imagePosition: 'left' | 'right';
+  imagePosition: 'left' | 'right' | 'top';
   subtitle?: JSX.Element;
   tag?: string;
   title: string;
+  variant?: 'outlined';
 }): JSX.Element {
   return (
     <Box
@@ -27,17 +29,34 @@ export function Card({
       alignSelf="center"
       as="section"
       display="flex"
-      flexDirection={['column', 'column', imagePosition === 'left' ? 'row' : 'row-reverse']}
-      gap={5}
+      flexDirection={
+        imagePosition === 'top'
+          ? 'column'
+          : ['column', 'column', imagePosition === 'left' ? 'row' : 'row-reverse']
+      }
       maxWidth="100%"
-      padding={5}
-      sx={{ '&:last-child': { paddingBottom: 5 } }}
+      overflow="hidden"
+      padding={variant === 'outlined' ? 0 : 5}
       width={1000}
+      {...(variant === 'outlined'
+        ? { border: '1px solid #eee', borderRadius: '16px' }
+        : { gap: [3, 3, 5], padding: 5 })}
     >
-      <Box borderRadius="16px" flexShrink={0} overflow="hidden" width={['100%', '100%', 300]}>
+      <Box
+        borderRadius={variant === 'outlined' ? 0 : '16px'}
+        flexShrink={0}
+        overflow="hidden"
+        width={imagePosition === 'top' ? '100%' : ['100%', '100%', 300]}
+      >
         <GatsbyImage alt={imageAlt} image={image} objectFit="cover" style={{ height: '100%' }} />
       </Box>
-      <Box display="flex" flexDirection="column" flexGrow={1} gap={5}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        flexGrow={1}
+        gap={5}
+        padding={variant === 'outlined' ? 3 : 0}
+      >
         <Box display="flex" flexDirection="column" gap={1}>
           {tag && (
             <Box>

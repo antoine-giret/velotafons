@@ -35,7 +35,6 @@ function KeyNumbers({
       gap={5}
       maxWidth="100%"
       padding={5}
-      sx={{ '&:last-child': { paddingBottom: 5 } }}
       width={1000}
     >
       <Heading as="h2" fontSize="2xl" fontWeight={700} textAlign="center">

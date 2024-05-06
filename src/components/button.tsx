@@ -1,4 +1,4 @@
-import { ButtonProps, Button as ChakraButton } from '@chakra-ui/react';
+import { ButtonProps, Button as ChakraButton, ResponsiveValue } from '@chakra-ui/react';
 import { Link } from 'gatsby';
 import React, { ReactNode, RefObject } from 'react';
 
@@ -13,7 +13,7 @@ export function Button({
   buttonRef?: RefObject<HTMLButtonElement>;
   colorScheme: 'whiteAlpha' | 'primary';
   children: ReactNode;
-  size?: 'md' | 'lg';
+  size?: ResponsiveValue<string>;
   variant?: string;
 } & (
   | { externalLink: true; href: string }
@@ -35,6 +35,7 @@ export function Button({
     };
   } else {
     commonsProps = {
+      ...commonsProps,
       colorScheme,
       color: variant === 'outlined' ? 'primary.500' : undefined,
       variant: variant === 'outlined' ? 'outline' : 'solid',

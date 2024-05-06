@@ -1,7 +1,7 @@
 import { HeadProps, PageProps, graphql } from 'gatsby';
 import React from 'react';
 
-import { useContent } from '../hooks';
+import { useContent, useHead } from '../hooks';
 
 function MissionPage({ data: { datoCmsMission } }: PageProps<Queries.MissionQuery>): JSX.Element {
   const { elements } = useContent({ data: datoCmsMission });
@@ -14,14 +14,7 @@ function MissionPage({ data: { datoCmsMission } }: PageProps<Queries.MissionQuer
 export default MissionPage;
 
 export function Head({ data: { site, datoCmsMission } }: HeadProps<Queries.MissionQuery>) {
-  const title = [datoCmsMission?.hero?.title, 'Vélotafons !'].filter(Boolean).join(' | ');
-  const _description = datoCmsMission?.hero?.subtitle;
-  const description =
-    _description && _description.length > 160
-      ? `${_description.substring(0, 157)}...`
-      : _description;
-  const url = site?.siteMetadata?.siteUrl;
-  const imageUrl = datoCmsMission?.hero?.backgroundImage?.url;
+  const { title, description, url, imageUrl } = useHead({ data: datoCmsMission, site });
 
   return (
     <>
@@ -50,9 +43,7 @@ export const query = graphql`
   }
   query Mission {
     site {
-      siteMetadata {
-        siteUrl
-      }
+      ...GatsbySite
     }
     datoCmsMission {
       ...MissionQuery

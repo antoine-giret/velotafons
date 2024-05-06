@@ -1,34 +1,18 @@
 import { graphql } from 'gatsby';
-import { getImage } from 'gatsby-plugin-image';
 import React from 'react';
-import showdown from 'showdown';
 
-import { Card } from './card';
-import { Links } from './links';
-
-const converter = new showdown.Converter({ simpleLineBreaks: true });
+import { PortraitCard } from './portrait-card';
 
 function HighlightedPortrait({
   data: { portrait, imagePosition, links },
 }: {
   data: Queries.HighlightedPortraitFragment;
 }): JSX.Element {
-  if (!portrait) return <></>;
-
-  const { slug, picture, pseudo, presentation } = portrait;
-  const image = picture && getImage(picture);
-  if (!image) return <></>;
-
   return (
-    <Card
-      actions={links && <Links links={links} />}
-      description={presentation ? converter.makeHtml(presentation) : undefined}
-      image={image}
-      imageAlt={picture.alt || ''}
+    <PortraitCard
+      data={portrait}
       imagePosition={imagePosition === 'right' ? 'right' : 'left'}
-      key={slug}
-      tag="Portraits de vélotafeurs"
-      title={`${pseudo} vélotafe !`}
+      links={links}
     />
   );
 }

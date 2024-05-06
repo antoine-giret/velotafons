@@ -37,6 +37,11 @@ export function Head({ data: { site, datoCmsHome } }: HeadProps<Queries.HomeQuer
 }
 
 export const query = graphql`
+  fragment GatsbySite on Site {
+    siteMetadata {
+      siteUrl
+    }
+  }
   fragment HomeQuery on DatoCmsHome {
     hero {
       ...Hero
@@ -56,9 +61,7 @@ export const query = graphql`
   }
   query Home {
     site {
-      siteMetadata {
-        siteUrl
-      }
+      ...GatsbySite
     }
     datoCmsHome {
       ...HomeQuery
