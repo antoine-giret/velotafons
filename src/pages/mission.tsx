@@ -1,6 +1,7 @@
 import { HeadProps, PageProps, graphql } from 'gatsby';
 import React from 'react';
 
+import { CommonHead } from '../components';
 import { useContent, useHead } from '../hooks';
 
 function MissionPage({ data: { datoCmsMission } }: PageProps<Queries.MissionQuery>): JSX.Element {
@@ -14,18 +15,19 @@ function MissionPage({ data: { datoCmsMission } }: PageProps<Queries.MissionQuer
 export default MissionPage;
 
 export function Head({ data: { site, datoCmsMission } }: HeadProps<Queries.MissionQuery>) {
-  const { title, description, url, imageUrl } = useHead({ data: datoCmsMission, site });
+  const { title, description, url } = useHead({
+    data: { title: datoCmsMission?.hero?.title, description: datoCmsMission?.hero?.subtitle },
+    site,
+  });
+  const imageUrl = datoCmsMission?.hero?.backgroundImage?.url;
 
   return (
-    <>
-      <title>{title}</title>
-      {description && <meta content={description} name="description" />}
-      <meta content={title} property="og:title" />
-      {description && <meta content={description} property="og:description" />}
-      <meta content="website" property="og:type" />
-      {url && <meta content={`${url}/mission`} property="og:url" />}
-      {imageUrl && <meta content={imageUrl} property="og:image" />}
-    </>
+    <CommonHead
+      description={description}
+      imageUrl={imageUrl}
+      title={title}
+      url={`${url}/mission`}
+    />
   );
 }
 

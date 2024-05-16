@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { HeadProps, Link, PageProps, graphql } from 'gatsby';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Button, GoodAddressCard, PortraitCard } from '../components';
+import { Button, CommonHead, GoodAddressCard, PortraitCard } from '../components';
 import { useContent, useHead } from '../hooks';
 
 type TItem = { key: string; publicationDate: Date } & (
@@ -163,18 +163,14 @@ function BlogPage({
 export default BlogPage;
 
 export function Head({ data: { site, datoCmsBlog } }: HeadProps<Queries.BlogQuery>) {
-  const { title, description, url, imageUrl } = useHead({ data: datoCmsBlog, site });
+  const { title, description, url } = useHead({
+    data: { title: datoCmsBlog?.hero?.title, description: datoCmsBlog?.hero?.subtitle },
+    site,
+  });
+  const imageUrl = datoCmsBlog?.hero?.backgroundImage?.url;
 
   return (
-    <>
-      <title>{title}</title>
-      {description && <meta content={description} name="description" />}
-      <meta content={title} property="og:title" />
-      {description && <meta content={description} property="og:description" />}
-      <meta content="website" property="og:type" />
-      {url && <meta content={`${url}/blog`} property="og:url" />}
-      {imageUrl && <meta content={imageUrl} property="og:image" />}
-    </>
+    <CommonHead description={description} imageUrl={imageUrl} title={title} url={`${url}/blog`} />
   );
 }
 

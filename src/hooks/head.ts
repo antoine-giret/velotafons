@@ -1,18 +1,16 @@
 export function useHead({
   site,
-  data,
+  data: { title: _title, description: _description },
 }: {
-  data: Queries.MissionQueryFragment | Queries.BlogQueryFragment | null;
+  data: { description?: string | null; title?: string | null };
   site: Queries.GatsbySiteFragment | null;
 }) {
-  const title = [data?.hero?.title, 'Vélotafons !'].filter(Boolean).join(' | ');
-  const _description = data?.hero?.subtitle;
+  const title = [_title, 'Vélotafons !'].filter(Boolean).join(' | ');
   const description =
     _description && _description.length > 160
       ? `${_description.substring(0, 157)}...`
       : _description;
-  const url = site?.siteMetadata?.siteUrl;
-  const imageUrl = data?.hero?.backgroundImage?.url;
+  const url = site?.siteMetadata?.siteUrl || '';
 
-  return { title, description, url, imageUrl };
+  return { title, description, url };
 }

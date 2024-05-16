@@ -2,6 +2,7 @@ import type { HeadProps, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import { CommonHead } from '../components';
 import { useContent } from '../hooks';
 
 function IndexPage({ data: { datoCmsHome } }: PageProps<Queries.HomeQuery>) {
@@ -24,15 +25,12 @@ export function Head({ data: { site, datoCmsHome } }: HeadProps<Queries.HomeQuer
   const imageUrl = datoCmsHome?.hero?.backgroundImage?.url;
 
   return (
-    <>
-      <title>Vélotafons !</title>
-      {description && <meta content={description} name="description" />}
-      <meta content="Vélotafons !" property="og:title" />
-      {description && <meta content={description} property="og:description" />}
-      <meta content="website" property="og:type" />
-      {url && <meta content={url} property="og:url" />}
-      {imageUrl && <meta content={imageUrl} property="og:image" />}
-    </>
+    <CommonHead
+      description={description}
+      imageUrl={imageUrl}
+      title="Vélotafons !"
+      url={url || ''}
+    />
   );
 }
 
