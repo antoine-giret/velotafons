@@ -2,7 +2,7 @@ import { Box, Heading, Icon, Text } from '@chakra-ui/react';
 import { HeadProps, graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
-import { IoBusinessOutline, IoTodayOutline } from 'react-icons/io5';
+import { IoBusinessOutline } from 'react-icons/io5';
 import showdown from 'showdown';
 
 import { Breadcrumb, CommonHead } from '../components';
@@ -48,17 +48,6 @@ function PortraitTemplate({
               </Text>
             </Box>
           )}
-          {publicationDate && (
-            <Box alignItems="center" display="flex" flexDirection="row" gap={1}>
-              <Icon as={IoTodayOutline} color="grey" />
-              <Text color="grey" fontSize="sm">
-                Publié le{' '}
-                {new Intl.DateTimeFormat('fr-FR', {
-                  dateStyle: 'medium',
-                }).format(new Date(publicationDate))}
-              </Text>
-            </Box>
-          )}
         </Box>
       </Box>
       <Box display="flex" flexDirection={['column', 'column', 'row']} gap={5}>
@@ -98,6 +87,16 @@ function PortraitTemplate({
           <Box marginLeft={3}>
             <Text as="div" dangerouslySetInnerHTML={{ __html: converter.makeHtml(equipment) }} />
           </Box>
+        </Box>
+      )}
+      {publicationDate && (
+        <Box marginTop={5}>
+          <Text color="grey" fontSize="sm">
+            Portrait publié le{' '}
+            {new Intl.DateTimeFormat('fr-FR', {
+              dateStyle: 'medium',
+            }).format(new Date(publicationDate))}
+          </Text>
         </Box>
       )}
     </Box>
