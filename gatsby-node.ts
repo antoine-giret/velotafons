@@ -15,6 +15,11 @@ export async function createPages({ graphql, actions: { createPage } }: CreatePa
           slug
         }
       }
+      allDatoCmsEvent {
+        nodes {
+          slug
+        }
+      }
     }
   `);
 
@@ -33,6 +38,16 @@ export async function createPages({ graphql, actions: { createPage } }: CreatePa
       createPage({
         path: `/blog/portraits/${slug}/`,
         component: path.resolve(`./src/templates/portrait.tsx`),
+        context: { slug },
+      });
+    }
+  }
+
+  for (const { slug } of data?.allDatoCmsEvent.nodes || []) {
+    if (slug) {
+      createPage({
+        path: `/blog/evenements/${slug}/`,
+        component: path.resolve(`./src/templates/event.tsx`),
         context: { slug },
       });
     }

@@ -2,16 +2,17 @@ import { Box } from '@chakra-ui/react';
 import { HeadProps, Link, PageProps, graphql } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 
-import { Button, CommonHead, GoodAddressCard, PortraitCard } from '../components';
+import { Button, CommonHead, EventCard, GoodAddressCard, PortraitCard } from '../components';
 import { useContent, useHead } from '../hooks';
 
 type TItem = { key: string; publicationDate: Date } & (
   | { data: Queries.BlogHubPortraitFragment; type: 'portrait' }
   | { data: Queries.BlogHubGoodAddressFragment; type: 'goodAddress' }
+  | { data: Queries.BlogHubEventFragment; type: 'event' }
 );
 
 function BlogPage({
-  data: { datoCmsBlog, allDatoCmsPortrait, allDatoCmsGoodAddress },
+  data: { datoCmsBlog, allDatoCmsPortrait, allDatoCmsGoodAddress, allDatoCmsEvent },
   location: { search },
 }: PageProps<Queries.BlogQuery>): JSX.Element {
   const [tags] = useState(() => {
@@ -23,7 +24,7 @@ function BlogPage({
           .map((ele) => ele.split('='))
           .find(([key]) => key === 'tags')?.[1]
           .split(',')
-          .filter((tag) => ['adresses', 'portraits'].includes(tag)) || []
+          .filter((tag) => ['adresses', 'portraits', 'evenements'].includes(tag)) || []
       );
     }
 
@@ -35,6 +36,9 @@ function BlogPage({
   const [goodAddressesDisplayed, toggleGoodAddresses] = useState(
     tags.length === 0 || tags.includes('adresses'),
   );
+  const [eventsDisplayed, toggleEvents] = useState(
+    tags.length === 0 || tags.includes('evenements'),
+  );
   const [items, setItems] = useState<Array<TItem>>(() => getItems());
   const { elements } = useContent({ data: datoCmsBlog });
 
@@ -45,7 +49,11 @@ function BlogPage({
       const url = new URL(window.location.href);
       url.searchParams.set(
         'tags',
-        [portraitsDisplayed ? 'portraits' : '', goodAddressesDisplayed ? 'adresses' : '']
+        [
+          portraitsDisplayed ? 'portraits' : '',
+          goodAddressesDisplayed ? 'adresses' : '',
+          eventsDisplayed ? 'evenements' : '',
+        ]
           .filter(Boolean)
           .join(','),
       );
@@ -90,6 +98,23 @@ function BlogPage({
       );
     }
 
+    if (eventsDisplayed) {
+      _items.push(
+        ...allDatoCmsEvent.nodes.reduce<TItem[]>((res, data) => {
+          if (data.startDate) {
+            res.push({
+              type: 'event',
+              key: `event-${data.slug}`,
+              publicationDate: new Date(data.startDate),
+              data,
+            });
+          }
+
+          return res;
+        }, []),
+      );
+    }
+
     return _items.sort((a, b) => a.publicationDate.getTime() - b.publicationDate.getTime());
   }
 
@@ -124,6 +149,14 @@ function BlogPage({
           >
             Bonnes adresses
           </Button>
+          <Button
+            colorScheme="primary"
+            onClick={() => toggleEvents(!eventsDisplayed)}
+            size="sm"
+            variant={eventsDisplayed ? 'solid' : 'outlined'}
+          >
+            Évènements
+          </Button>
         </Box>
         <Box display="flex" flexWrap="wrap" gap={3}>
           {items.map(({ key, type, data }) => {
@@ -142,12 +175,16 @@ function BlogPage({
                 to={
                   type === 'portrait'
                     ? `/blog/portraits/${data.slug}`
-                    : `/blog/adresses/${data.slug}`
+                    : type === 'event'
+                      ? `/blog/evenements/${data.slug}`
+                      : `/blog/adresses/${data.slug}`
                 }
                 width={['100%', 'calc((100% - 24px) / 2)', 'calc((100% - 48px) / 3)']}
               >
                 {type === 'portrait' ? (
                   <PortraitCard data={data} imagePosition="top" variant="outlined" />
+                ) : type === 'event' ? (
+                  <EventCard data={data} />
                 ) : (
                   <GoodAddressCard data={data} />
                 )}
@@ -197,6 +234,18 @@ export const query = graphql`
       alt
     }
   }
+  fragment BlogHubEvent on DatoCmsEvent {
+    slug
+    title
+    startDate
+    endDate
+    location
+    description
+    image {
+      gatsbyImageData(aspectRatio: 1.6, width: 688)
+      alt
+    }
+  }
   fragment BlogQuery on DatoCmsBlog {
     hero {
       ...Hero
@@ -217,6 +266,11 @@ export const query = graphql`
     allDatoCmsGoodAddress {
       nodes {
         ...BlogHubGoodAddress
+      }
+    }
+    allDatoCmsEvent {
+      nodes {
+        ...BlogHubEvent
       }
     }
   }

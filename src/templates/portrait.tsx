@@ -52,7 +52,13 @@ function PortraitTemplate({
       </Box>
       <Box display="flex" flexDirection={['column', 'column', 'row']} gap={5}>
         {image && (
-          <Box borderRadius="8px" flexShrink={0} overflow="hidden" width={['100%', '100%', 300]}>
+          <Box
+            border="1px solid #eee"
+            borderRadius="8px"
+            flexShrink={0}
+            overflow="hidden"
+            width={['100%', '100%', 300]}
+          >
             <GatsbyImage alt={picture.alt || ''} image={image} objectFit="cover" />
           </Box>
         )}

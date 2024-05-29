@@ -34,6 +34,7 @@ export function Card({
           ? 'column'
           : ['column', 'column', imagePosition === 'left' ? 'row' : 'row-reverse']
       }
+      height="100%"
       maxWidth="100%"
       overflow="hidden"
       padding={variant === 'outlined' ? 0 : 5}

@@ -2,7 +2,7 @@ import { Box, Heading, Icon, Text } from '@chakra-ui/react';
 import { HeadProps, graphql } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { Fragment } from 'react';
-import { IoLinkOutline, IoPinOutline } from 'react-icons/io5';
+import { IoLinkOutline, IoMapOutline } from 'react-icons/io5';
 import showdown from 'showdown';
 
 import { Breadcrumb, CommonHead } from '../components';
@@ -42,7 +42,7 @@ function GoodAddressTemplate({
           </Heading>
           {address && (
             <Box alignItems="center" display="flex" flexDirection="row" gap={1}>
-              <Icon as={IoPinOutline} color="grey" />
+              <Icon as={IoMapOutline} color="grey" />
               <Text color="grey" fontSize="sm">
                 {address}
               </Text>
@@ -59,7 +59,13 @@ function GoodAddressTemplate({
         </Box>
       </Box>
       {mainPhoto && (
-        <Box borderRadius="8px" flexShrink={0} overflow="hidden" width="100%">
+        <Box
+          border="1px solid #eee"
+          borderRadius="8px"
+          flexShrink={0}
+          overflow="hidden"
+          width="100%"
+        >
           <GatsbyImage alt={photos[0].alt || ''} image={mainPhoto} objectFit="cover" />
         </Box>
       )}
@@ -81,7 +87,13 @@ function GoodAddressTemplate({
                   key={_photo.originalId}
                   width={['100%', 'calc((100% - 24px) / 2)', 'calc((100% - 48px) / 3)']}
                 >
-                  <Box borderRadius="8px" flexShrink={0} overflow="hidden" width="100%">
+                  <Box
+                    border="1px solid #eee"
+                    borderRadius="8px"
+                    flexShrink={0}
+                    overflow="hidden"
+                    width="100%"
+                  >
                     <GatsbyImage alt={_photo.alt || ''} image={photo} objectFit="cover" />
                   </Box>
                 </Box>

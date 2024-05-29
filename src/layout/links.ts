@@ -5,7 +5,6 @@ export const links: Array<{ key: string; label: string; to: string }> = [
   { key: 'home', label: 'Accueil', to: '/' },
   { key: 'mission', label: 'Notre mission', to: '/mission' },
   { key: 'blog', label: 'Blog', to: '/blog' },
-  { key: 'events', label: 'Évènements', to: '/' },
   { key: 'contact', label: 'Contact', to: '/' },
 ];
 

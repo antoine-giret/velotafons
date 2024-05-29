@@ -1,6 +1,7 @@
 export * from './breadcrumb';
 export * from './button';
 export * from './card';
+export * from './event-card';
 export * from './good-address-card';
 export * from './head';
 export * from './icon-button';
