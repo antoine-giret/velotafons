@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import type { GatsbyConfig } from 'gatsby';
+
+dotenv.config({ path: `.env` });
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -10,7 +13,7 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-datocms',
       options: {
-        apiToken: '313c8a869b6e59eb3e07a88b17e580',
+        apiToken: process.env.GATSBY_SOURCE_DATOCMS_API_TOKEN,
       },
     },
     'gatsby-plugin-image',
