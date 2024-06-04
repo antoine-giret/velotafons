@@ -5,7 +5,7 @@ export const links: Array<{ key: string; label: string; to: string }> = [
   { key: 'home', label: 'Accueil', to: '/' },
   { key: 'mission', label: 'Notre mission', to: '/mission' },
   { key: 'blog', label: 'Blog', to: '/blog' },
-  { key: 'contact', label: 'Contact', to: '/' },
+  { key: 'contact', label: 'Contact', to: '/contact' },
 ];
 
 export const socialLinks: Array<{ Icon: IconType; key: string; href: string; label: string }> = [

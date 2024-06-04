@@ -44,7 +44,7 @@ function Hero({
         gap={3}
         justifyContent="center"
         paddingX={[4, 4, 8]}
-        paddingY={12}
+        paddingY={height === 'fill_view' ? 12 : 8}
         position="relative"
         sx={
           height === 'fill_view'
