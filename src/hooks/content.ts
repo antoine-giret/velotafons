@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Cards from '../components/cards';
 import Hero from '../components/hero';
 import HighlightedEvent from '../components/highlighted-event';
+import HighlightedIllustration from '../components/highlighted-illustration';
 import HighlightedPortrait from '../components/highlighted-portrait';
 import ImageCard from '../components/image-card';
 import KeyNumbers from '../components/key-numbers';
@@ -20,6 +21,8 @@ function getElement(
       return { Ele: Hero as never, data: block };
     case 'DatoCmsKeyNumbersBlock':
       return { Ele: KeyNumbers as never, data: block };
+    case 'DatoCmsHighlightedIllustration':
+      return { Ele: HighlightedIllustration as never, data: block };
     case 'DatoCmsHighlightedPortrait':
       return { Ele: HighlightedPortrait as never, data: block };
     case 'DatoCmsImageCard':

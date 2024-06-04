@@ -5,5 +5,6 @@ export * from './event-card';
 export * from './good-address-card';
 export * from './head';
 export * from './icon-button';
+export * from './illustration-card';
 export * from './links';
 export * from './portrait-card';

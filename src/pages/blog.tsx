@@ -2,20 +2,45 @@ import { Box } from '@chakra-ui/react';
 import { HeadProps, Link, PageProps, graphql } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 
-import { Button, CommonHead, EventCard, GoodAddressCard, PortraitCard } from '../components';
+import {
+  Button,
+  CommonHead,
+  EventCard,
+  GoodAddressCard,
+  IllustrationCard,
+  PortraitCard,
+} from '../components';
 import { useContent, useHead } from '../hooks';
 
+export const tags = ['illustrations', 'goodAddresses', 'portraits', 'events'] as const;
+
+export type TTag = (typeof tags)[number];
+
+const tagsMap: { [key in TTag]: { label: string; searchValue: string } } = {
+  illustrations: { label: 'Illustrations', searchValue: 'illustrations' },
+  goodAddresses: { label: 'Bonnes adresses', searchValue: 'adresses' },
+  portraits: { label: 'Portraits de vélotafeurs', searchValue: 'portraits' },
+  events: { label: 'Évènements', searchValue: 'evenements' },
+};
+
 type TItem = { key: string; publicationDate: Date } & (
+  | { data: Queries.BlogHubIllustrationFragment; type: 'illustration' }
   | { data: Queries.BlogHubPortraitFragment; type: 'portrait' }
   | { data: Queries.BlogHubGoodAddressFragment; type: 'goodAddress' }
   | { data: Queries.BlogHubEventFragment; type: 'event' }
 );
 
 function BlogPage({
-  data: { datoCmsBlog, allDatoCmsPortrait, allDatoCmsGoodAddress, allDatoCmsEvent },
+  data: {
+    datoCmsBlog,
+    allDatoCmsIllustration,
+    allDatoCmsPortrait,
+    allDatoCmsGoodAddress,
+    allDatoCmsEvent,
+  },
   location: { search },
 }: PageProps<Queries.BlogQuery>): JSX.Element {
-  const [tags] = useState(() => {
+  const [initialSelectedTags] = useState(() => {
     if (search) {
       return (
         search
@@ -24,21 +49,25 @@ function BlogPage({
           .map((ele) => ele.split('='))
           .find(([key]) => key === 'tags')?.[1]
           .split(',')
-          .filter((tag) => ['adresses', 'portraits', 'evenements'].includes(tag)) || []
+          .filter((tag) => tags.map((key) => tagsMap[key].searchValue).includes(tag as TTag)) || []
       );
     }
 
     return [];
   });
-  const [portraitsDisplayed, togglePortraits] = useState(
-    tags.length === 0 || tags.includes('portraits'),
-  );
-  const [goodAddressesDisplayed, toggleGoodAddresses] = useState(
-    tags.length === 0 || tags.includes('adresses'),
-  );
-  const [eventsDisplayed, toggleEvents] = useState(
-    tags.length === 0 || tags.includes('evenements'),
-  );
+  const [selectedTags, selectTags] = useState<{ [key in TTag]: boolean }>({
+    illustrations:
+      initialSelectedTags.length === 0 ||
+      initialSelectedTags.includes(tagsMap.illustrations.searchValue),
+    portraits:
+      initialSelectedTags.length === 0 ||
+      initialSelectedTags.includes(tagsMap.portraits.searchValue),
+    goodAddresses:
+      initialSelectedTags.length === 0 ||
+      initialSelectedTags.includes(tagsMap.goodAddresses.searchValue),
+    events:
+      initialSelectedTags.length === 0 || initialSelectedTags.includes(tagsMap.events.searchValue),
+  });
   const [items, setItems] = useState<Array<TItem>>(() => getItems());
   const { elements } = useContent({ data: datoCmsBlog });
 
@@ -49,22 +78,36 @@ function BlogPage({
       const url = new URL(window.location.href);
       url.searchParams.set(
         'tags',
-        [
-          portraitsDisplayed ? 'portraits' : '',
-          goodAddressesDisplayed ? 'adresses' : '',
-          eventsDisplayed ? 'evenements' : '',
-        ]
+        tags
+          .map((key) => (selectedTags[key] ? tagsMap[key].searchValue : ''))
           .filter(Boolean)
           .join(','),
       );
       window.history.replaceState(null, '', url.toString());
     }
-  }, [portraitsDisplayed, goodAddressesDisplayed]);
+  }, [selectedTags]);
 
   function getItems() {
     const _items: Array<TItem> = [];
 
-    if (portraitsDisplayed) {
+    if (selectedTags.illustrations) {
+      _items.push(
+        ...allDatoCmsIllustration.nodes.reduce<TItem[]>((res, data) => {
+          if (data.publicationDate) {
+            res.push({
+              type: 'illustration',
+              key: `illustration-${data.slug}`,
+              publicationDate: new Date(data.publicationDate),
+              data,
+            });
+          }
+
+          return res;
+        }, []),
+      );
+    }
+
+    if (selectedTags.portraits) {
       _items.push(
         ...allDatoCmsPortrait.nodes.reduce<TItem[]>((res, data) => {
           if (data.publicationDate) {
@@ -81,7 +124,7 @@ function BlogPage({
       );
     }
 
-    if (goodAddressesDisplayed) {
+    if (selectedTags.goodAddresses) {
       _items.push(
         ...allDatoCmsGoodAddress.nodes.reduce<TItem[]>((res, data) => {
           if (data.publicationDate) {
@@ -98,7 +141,7 @@ function BlogPage({
       );
     }
 
-    if (eventsDisplayed) {
+    if (selectedTags.events) {
       _items.push(
         ...allDatoCmsEvent.nodes.reduce<TItem[]>((res, data) => {
           if (data.startDate) {
@@ -133,30 +176,25 @@ function BlogPage({
         width={1000}
       >
         <Box columnGap={2} display="flex" flexWrap="wrap" rowGap={1}>
-          <Button
-            colorScheme="primary"
-            onClick={() => togglePortraits(!portraitsDisplayed)}
-            size="sm"
-            variant={portraitsDisplayed ? 'solid' : 'outlined'}
-          >
-            Portraits de vélotafeurs
-          </Button>
-          <Button
-            colorScheme="primary"
-            onClick={() => toggleGoodAddresses(!goodAddressesDisplayed)}
-            size="sm"
-            variant={goodAddressesDisplayed ? 'solid' : 'outlined'}
-          >
-            Bonnes adresses
-          </Button>
-          <Button
-            colorScheme="primary"
-            onClick={() => toggleEvents(!eventsDisplayed)}
-            size="sm"
-            variant={eventsDisplayed ? 'solid' : 'outlined'}
-          >
-            Évènements
-          </Button>
+          {tags.map((key) => {
+            const { label } = tagsMap[key];
+            const active = selectedTags[key];
+
+            return (
+              <Button
+                colorScheme="primary"
+                key={key}
+                onClick={() =>
+                  (!active || Object.values(selectedTags).filter(Boolean).length > 1) &&
+                  selectTags({ ...selectedTags, [key]: !active })
+                }
+                size="sm"
+                variant={active ? 'solid' : 'outlined'}
+              >
+                {label}
+              </Button>
+            );
+          })}
         </Box>
         <Box display="flex" flexWrap="wrap" gap={3}>
           {items.map(({ key, type, data }) => {
@@ -173,15 +211,19 @@ function BlogPage({
                   },
                 }}
                 to={
-                  type === 'portrait'
-                    ? `/blog/portraits/${data.slug}`
-                    : type === 'event'
-                      ? `/blog/evenements/${data.slug}`
-                      : `/blog/adresses/${data.slug}`
+                  type === 'illustration'
+                    ? `/blog/illustrations/${data.slug}`
+                    : 'portrait'
+                      ? `/blog/portraits/${data.slug}`
+                      : type === 'event'
+                        ? `/blog/evenements/${data.slug}`
+                        : `/blog/adresses/${data.slug}`
                 }
                 width={['100%', 'calc((100% - 24px) / 2)', 'calc((100% - 48px) / 3)']}
               >
-                {type === 'portrait' ? (
+                {type === 'illustration' ? (
+                  <IllustrationCard data={data} />
+                ) : type === 'portrait' ? (
                   <PortraitCard data={data} imagePosition="top" variant="outlined" />
                 ) : type === 'event' ? (
                   <EventCard data={data} />
@@ -212,6 +254,16 @@ export function Head({ data: { site, datoCmsBlog } }: HeadProps<Queries.BlogQuer
 }
 
 export const query = graphql`
+  fragment BlogHubIllustration on DatoCmsIllustration {
+    slug
+    title
+    publicationDate
+    illustration {
+      gatsbyImageData(aspectRatio: 1.6, width: 688)
+      alt
+    }
+    description
+  }
   fragment BlogHubPortrait on DatoCmsPortrait {
     slug
     pseudo
@@ -257,6 +309,11 @@ export const query = graphql`
     }
     datoCmsBlog {
       ...BlogQuery
+    }
+    allDatoCmsIllustration {
+      nodes {
+        ...BlogHubIllustration
+      }
     }
     allDatoCmsPortrait {
       nodes {

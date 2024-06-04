@@ -47,6 +47,9 @@ export const query = graphql`
     keyNumbersBlock {
       ...KeyNumbers
     }
+    highlightedIllustration {
+      ...HighlightedIllustration
+    }
     highlightedPortrait {
       ...HighlightedPortrait
     }
