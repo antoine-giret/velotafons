@@ -47,13 +47,22 @@ function Footer(): JSX.Element {
               Vélotafons ! est une association à but non lucratif, ayant pour objet la promotion des
               mobilités douces et durables
             </Text>
-            <ChakraLink
-              href="https://www.helloasso.com/associations/velotafons/adhesions/challenge-mobilite"
-              sx={{ textDecoration: 'underline' }}
-              target="_blank"
-            >
-              Adhérez à l'association
-            </ChakraLink>
+            <Box display="flex" flexDirection="column">
+              <ChakraLink
+                href="https://velotafons.substack.com/"
+                sx={{ textDecoration: 'underline' }}
+                target="_blank"
+              >
+                Abonnez-vous à la newsletter
+              </ChakraLink>
+              <ChakraLink
+                href="https://www.helloasso.com/associations/velotafons/adhesions/challenge-mobilite"
+                sx={{ textDecoration: 'underline' }}
+                target="_blank"
+              >
+                Adhérez à l'association
+              </ChakraLink>
+            </Box>
           </Box>
           <Box alignItems="center" display="flex" gap={1}>
             {socialLinks.map(({ key, Icon, label, href }) => (

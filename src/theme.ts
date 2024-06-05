@@ -1,7 +1,7 @@
 import { theme as chakraTheme, extendBaseTheme } from '@chakra-ui/react';
 import '@fontsource/nunito-sans';
 
-const { Badge, Breadcrumb, Button, Drawer, Skeleton } = chakraTheme.components;
+const { Badge, Breadcrumb, Button, Drawer, Modal, Skeleton } = chakraTheme.components;
 
 const theme = extendBaseTheme({
   fonts: {
@@ -32,6 +32,7 @@ const theme = extendBaseTheme({
     Breadcrumb,
     Button,
     Drawer,
+    Modal,
     Skeleton,
   },
 });
