@@ -158,7 +158,7 @@ function BlogPage({
       );
     }
 
-    return _items.sort((a, b) => a.publicationDate.getTime() - b.publicationDate.getTime());
+    return _items.sort((a, b) => b.publicationDate.getTime() - a.publicationDate.getTime());
   }
 
   if (!datoCmsBlog) return <></>;
@@ -213,7 +213,7 @@ function BlogPage({
                 to={
                   type === 'illustration'
                     ? `/blog/illustrations/${data.slug}`
-                    : 'portrait'
+                    : type === 'portrait'
                       ? `/blog/portraits/${data.slug}`
                       : type === 'event'
                         ? `/blog/evenements/${data.slug}`
