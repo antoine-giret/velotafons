@@ -1,1 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap');
+
+div.chakra-text:not(.webkit-box) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  a {
+    text-decoration: underline;
+  }
+}

@@ -6,6 +6,7 @@ import React from 'react';
 
 import Layout from './src/layout';
 import theme from './src/theme';
+import './src/style.css';
 
 const app = initializeApp({
   apiKey: process.env.GATSBY_FIREBASE_API_KEY,

@@ -4,6 +4,7 @@ import React from 'react';
 
 import Layout from './src/layout';
 import theme from './src/theme';
+import './src/style.css';
 
 export function onRenderBody({ setHtmlAttributes }: RenderBodyArgs) {
   setHtmlAttributes({ lang: 'fr' });

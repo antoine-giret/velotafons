@@ -71,6 +71,7 @@ export function Card({
           {description && (
             <Text
               as="div"
+              className="webkit-box"
               dangerouslySetInnerHTML={{ __html: description }}
               display="-webkit-box"
               overflow="hidden"
