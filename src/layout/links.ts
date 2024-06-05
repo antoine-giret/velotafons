@@ -1,5 +1,5 @@
 import { IconType } from 'react-icons';
-import { IoLogoInstagram, IoLogoLinkedin } from 'react-icons/io5';
+import { IoLogoDiscord, IoLogoInstagram, IoLogoLinkedin } from 'react-icons/io5';
 
 export const links: Array<{ key: string; label: string; to: string }> = [
   { key: 'home', label: 'Accueil', to: '/' },
@@ -20,5 +20,11 @@ export const socialLinks: Array<{ Icon: IconType; key: string; href: string; lab
     Icon: IoLogoLinkedin,
     label: 'LinkedIn',
     href: 'https://www.linkedin.com/company/velotafons/',
+  },
+  {
+    key: 'discord',
+    Icon: IoLogoDiscord,
+    label: 'Discord',
+    href: 'https://discord.gg/RwAzPgxJEX/',
   },
 ];
