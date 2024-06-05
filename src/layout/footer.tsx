@@ -42,11 +42,18 @@ function Footer(): JSX.Element {
           <Box>
             <img alt="Logo Vélotafons !" height="32px" src={icon} />
           </Box>
-          <Box>
+          <Box display="flex" flexDirection="column" gap={1}>
             <Text>
               Vélotafons ! est une association à but non lucratif, ayant pour objet la promotion des
               mobilités douces et durables
             </Text>
+            <ChakraLink
+              href="https://www.helloasso.com/associations/velotafons/adhesions/challenge-mobilite"
+              sx={{ textDecoration: 'underline' }}
+              target="_blank"
+            >
+              Adhérez à l'association
+            </ChakraLink>
           </Box>
           <Box alignItems="center" display="flex" gap={1}>
             {socialLinks.map(({ key, Icon, label, href }) => (
