@@ -44,12 +44,23 @@ export function Head({ data: { site, datoCmsContact } }: HeadProps<Queries.Conta
     data: { title: datoCmsContact?.hero?.title, description: datoCmsContact?.hero?.subtitle },
     site,
   });
+  const imageUrl = datoCmsContact?.metaImage?.url;
 
-  return <CommonHead description={description} title={title} url={`${url}/contact`} />;
+  return (
+    <CommonHead
+      description={description}
+      imageUrl={imageUrl}
+      title={title}
+      url={`${url}/contact`}
+    />
+  );
 }
 
 export const query = graphql`
   fragment ContactQuery on DatoCmsContact {
+    metaImage {
+      url
+    }
     hero {
       ...Hero
     }

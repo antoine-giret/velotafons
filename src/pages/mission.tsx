@@ -19,7 +19,7 @@ export function Head({ data: { site, datoCmsMission } }: HeadProps<Queries.Missi
     data: { title: datoCmsMission?.hero?.title, description: datoCmsMission?.hero?.subtitle },
     site,
   });
-  const imageUrl = datoCmsMission?.hero?.backgroundImage?.url;
+  const imageUrl = datoCmsMission?.metaImage?.url || datoCmsMission?.hero?.backgroundImage?.url;
 
   return (
     <CommonHead
@@ -33,6 +33,9 @@ export function Head({ data: { site, datoCmsMission } }: HeadProps<Queries.Missi
 
 export const query = graphql`
   fragment MissionQuery on DatoCmsMission {
+    metaImage {
+      url
+    }
     hero {
       ...Hero
     }

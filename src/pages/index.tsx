@@ -22,7 +22,7 @@ export function Head({ data: { site, datoCmsHome } }: HeadProps<Queries.HomeQuer
       ? `${_description.substring(0, 157)}...`
       : _description;
   const url = site?.siteMetadata?.siteUrl;
-  const imageUrl = datoCmsHome?.hero?.backgroundImage?.url;
+  const imageUrl = datoCmsHome?.metaImage?.url || datoCmsHome?.hero?.backgroundImage?.url;
 
   return (
     <CommonHead
@@ -41,6 +41,9 @@ export const query = graphql`
     }
   }
   fragment HomeQuery on DatoCmsHome {
+    metaImage {
+      url
+    }
     hero {
       ...Hero
     }

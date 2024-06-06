@@ -246,7 +246,7 @@ export function Head({ data: { site, datoCmsBlog } }: HeadProps<Queries.BlogQuer
     data: { title: datoCmsBlog?.hero?.title, description: datoCmsBlog?.hero?.subtitle },
     site,
   });
-  const imageUrl = datoCmsBlog?.hero?.backgroundImage?.url;
+  const imageUrl = datoCmsBlog?.metaImage?.url || datoCmsBlog?.hero?.backgroundImage?.url;
 
   return (
     <CommonHead description={description} imageUrl={imageUrl} title={title} url={`${url}/blog`} />
@@ -299,6 +299,9 @@ export const query = graphql`
     }
   }
   fragment BlogQuery on DatoCmsBlog {
+    metaImage {
+      url
+    }
     hero {
       ...Hero
     }
