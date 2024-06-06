@@ -20,6 +20,7 @@
     "@emotion/styled": "11.11.5",
     "@fontsource/nunito-sans": "5.0.13",
     "@mdx-js/react": "3.0.1",
+    "firebase": "10.12.2",
     "framer-motion": "11.0.5",
     "gatsby": "5.13.3",
     "gatsby-plugin-image": "3.13.1",
