@@ -6,12 +6,16 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
+  repository_dispatch:
+    types:
+      - webhook
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: SpicyPizza/create-envfile@v1
+      - name: 🔐 Create .env
+        uses: SpicyPizza/create-envfile@v1
         with:
           envkey_GATSBY_SOURCE_DATOCMS_API_TOKEN: ${{ secrets.GATSBY_SOURCE_DATOCMS_API_TOKEN }}
           envkey_GATSBY_GEOVELO_AUTHORIZATION: ${{ secrets.GATSBY_GEOVELO_AUTHORIZATION }}
@@ -22,10 +26,31 @@ jobs:
           envkey_GATSBY_FIREBASE_APP_ID: ${{ secrets.GATSBY_FIREBASE_APP_ID }}
           envkey_GATSBY_FIREBASE_MEASUREMENT_ID: ${{ secrets.GATSBY_FIREBASE_MEASUREMENT_ID }}
           file_name: .env
-      - run: yarn install --frozen-lockfile && yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: 📦 Install dependencies and build
+        run: yarn install --frozen-lockfile && yarn build
+      - name: 🚀 Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASSO_VELOTAFONS }}'
           channelId: live
           projectId: asso-velotafons
+  notify_success:
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [build_and_deploy]
+    steps:
+      - name: ✅ Notify successful build and deploy to DatoCMS
+        if: ${{ always() && !cancelled() && contains(needs.*.result, 'success') }}
+        run: |
+          curl -n -X POST https://webhooks.datocms.com/8SQciQT8SI/deploy-results -H 'Content-Type: application/json' -d '{ "status": "success" }'
+  notify_failure:
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    needs: [build_and_deploy]
+    steps:
+      - name: ❌ Notify failed build or deploy to DatoCMS
+        if: ${{ always() && !cancelled() && contains(needs.*.result, 'failure') }}
+        run: |
+          curl -n -X POST https://webhooks.datocms.com/8SQciQT8SI/deploy-results -H 'Content-Type: application/json' -d '{ "status": "error" }'
+
