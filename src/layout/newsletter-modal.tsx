@@ -34,7 +34,7 @@ function NewsletterModal({ open, onClose }: { onClose: () => void; open: boolean
       size="lg"
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent sx={{ width: '90%' }}>
         <ModalHeader>Abonnez-vous à la newsletter</ModalHeader>
         <ModalCloseButton />
         <ModalBody sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
