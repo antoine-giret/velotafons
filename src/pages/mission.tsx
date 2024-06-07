@@ -1,15 +1,51 @@
+import { Box, Heading, Text } from '@chakra-ui/react';
 import { HeadProps, PageProps, graphql } from 'gatsby';
 import React from 'react';
+import showdown from 'showdown';
 
-import { CommonHead } from '../components';
+import { CommonHead, Links } from '../components';
 import { useContent, useHead } from '../hooks';
 
-function MissionPage({ data: { datoCmsMission } }: PageProps<Queries.MissionQuery>): JSX.Element {
+const converter = new showdown.Converter({ simpleLineBreaks: true });
+
+function MissionPage({
+  data: { datoCmsMission, datoCmsNewsletter },
+}: PageProps<Queries.MissionQuery>): JSX.Element {
   const { elements } = useContent({ data: datoCmsMission });
 
   if (!datoCmsMission) return <></>;
 
-  return <>{elements?.map(({ Ele, data }) => <Ele data={data} key={data.id} />)}</>;
+  return (
+    <>
+      {elements?.map(({ Ele, data }) => <Ele data={data} key={data.id} />)}
+      {datoCmsNewsletter && (
+        <Box
+          alignItems="center"
+          alignSelf="center"
+          as="section"
+          display="flex"
+          flexDirection="column"
+          gap={5}
+          maxWidth="100%"
+          padding={5}
+          width={1000}
+        >
+          <Heading as="h2" fontSize="2xl" fontWeight={700} textAlign="center">
+            {datoCmsNewsletter.title}
+          </Heading>
+          {datoCmsNewsletter.description && (
+            <Text
+              as="div"
+              dangerouslySetInnerHTML={{
+                __html: converter.makeHtml(datoCmsNewsletter.description),
+              }}
+            />
+          )}
+          {datoCmsNewsletter.link && <Links links={[datoCmsNewsletter.link]} size="lg" />}
+        </Box>
+      )}
+    </>
+  );
 }
 
 export default MissionPage;
@@ -52,6 +88,9 @@ export const query = graphql`
     }
     datoCmsMission {
       ...MissionQuery
+    }
+    datoCmsNewsletter {
+      ...Newsletter
     }
   }
 `;

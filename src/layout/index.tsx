@@ -2,9 +2,10 @@ import { Box } from '@chakra-ui/react';
 import { WrapPageElementBrowserArgs } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 
+import { NewsletterModal } from '../components';
+
 import Footer from './footer';
 import Header from './header';
-import NewsletterModal from './newsletter-modal';
 
 function Layout({ element }: WrapPageElementBrowserArgs): JSX.Element {
   const [initialized, setInitialized] = useState(false);

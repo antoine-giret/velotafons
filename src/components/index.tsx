@@ -7,4 +7,5 @@ export * from './head';
 export * from './icon-button';
 export * from './illustration-card';
 export * from './links';
+export * from './newsletter-modal';
 export * from './portrait-card';
