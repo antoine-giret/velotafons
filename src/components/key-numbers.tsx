@@ -105,7 +105,12 @@ function KeyNumbers({
               width={['100%', 'calc((100% - 40px) / 2)', 'calc((100% - 120px) / 4)']}
             >
               <ChakraIcon as={Icon} color="primary.500" fontSize="3xl" />
-              <Box alignItems="center" display="flex" flexDirection="column">
+              <Box
+                suppressHydrationWarning
+                alignItems="center"
+                display="flex"
+                flexDirection="column"
+              >
                 {value !== undefined ? (
                   <Text fontSize="3xl" fontWeight={700}>
                     {format(value)}
