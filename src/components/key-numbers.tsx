@@ -45,6 +45,7 @@ function KeyNumbers({
           ['source', process.env.GATSBY_GEOVELO_SOURCE || ''],
         ],
       });
+      if (res.status !== 200) throw new Error('Geovelo data recovery failed');
       const { total_members, total_distance } = await res.json();
 
       setValues({
