@@ -4,7 +4,7 @@ import React from 'react';
 import { PortraitCard } from './portrait-card';
 
 function HighlightedPortrait({
-  data: { portrait, imagePosition, links },
+  data: { portrait, imagePosition, discoverButtonText, links },
 }: {
   data: Queries.HighlightedPortraitFragment;
 }): JSX.Element {
@@ -12,7 +12,23 @@ function HighlightedPortrait({
     <PortraitCard
       data={portrait}
       imagePosition={imagePosition === 'right' ? 'right' : 'left'}
-      links={links}
+      links={
+        discoverButtonText || links
+          ? [
+              ...(discoverButtonText
+                ? [
+                    {
+                      id: 'discover',
+                      label: discoverButtonText,
+                      to: `/blog/portraits/${portrait?.slug}`,
+                      variant: 'solid',
+                    },
+                  ]
+                : []),
+              ...(links ? links : []),
+            ]
+          : undefined
+      }
     />
   );
 }
@@ -35,6 +51,7 @@ export const query = graphql`
       }
     }
     imagePosition
+    discoverButtonText
     links {
       ... on DatoCmsLink {
         ...Link

@@ -11,7 +11,7 @@ import { Links } from './links';
 const converter = new showdown.Converter({ simpleLineBreaks: true });
 
 function HighlightedEvent({
-  data: { event, imagePosition, links },
+  data: { event, imagePosition, discoverButtonText, links },
 }: {
   data: Queries.HighlightedEventFragment;
 }): JSX.Element {
@@ -23,7 +23,25 @@ function HighlightedEvent({
 
   return (
     <Card
-      actions={links && <Links links={links} />}
+      actions={
+        links && (
+          <Links
+            links={[
+              ...(discoverButtonText
+                ? [
+                    {
+                      id: 'discover',
+                      label: discoverButtonText,
+                      to: `/blog/evenements/${slug}`,
+                      variant: 'solid',
+                    },
+                  ]
+                : []),
+              ...links,
+            ]}
+          />
+        )
+      }
       description={description ? converter.makeHtml(description) : undefined}
       image={image}
       imageAlt={_image.alt || ''}
@@ -85,6 +103,7 @@ export const query = graphql`
       description
     }
     imagePosition
+    discoverButtonText
     links {
       ... on DatoCmsLink {
         ...Link
