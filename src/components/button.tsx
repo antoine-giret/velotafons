@@ -4,6 +4,7 @@ import React, { ReactNode, RefObject } from 'react';
 
 export function Button({
   buttonRef,
+  disabled,
   colorScheme,
   size,
   variant,
@@ -13,6 +14,7 @@ export function Button({
   buttonRef?: RefObject<HTMLButtonElement>;
   colorScheme: 'whiteAlpha' | 'primary';
   children: ReactNode;
+  disabled?: boolean;
   size?: ResponsiveValue<string>;
   variant?: string;
 } & (
@@ -59,7 +61,7 @@ export function Button({
   }
 
   return (
-    <ChakraButton {...commonsProps} onClick={props.onClick} ref={buttonRef}>
+    <ChakraButton {...commonsProps} disabled={disabled} onClick={props.onClick} ref={buttonRef}>
       {children}
     </ChakraButton>
   );

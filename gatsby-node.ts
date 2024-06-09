@@ -1,6 +1,39 @@
 import path from 'path';
 
-import { CreatePagesArgs } from 'gatsby';
+import { CreatePagesArgs, SourceNodesArgs } from 'gatsby';
+
+import { GeogroupService } from './src/services';
+
+export async function sourceNodes({ actions, createNodeId, createContentDigest }: SourceNodesArgs) {
+  const { createNode } = actions;
+
+  try {
+    const challenges: Array<{ id: number }> = await GeogroupService.getChallenges();
+
+    for (const challenge of challenges) {
+      const nodeId = createNodeId(`challenge.${challenge.id}`);
+      const nodeContent = JSON.stringify(challenge);
+      const node = Object.assign(
+        {},
+        { data: challenge },
+        {
+          id: nodeId,
+          originalId: challenge.id,
+          parent: null,
+          children: [],
+          internal: {
+            type: 'challenge',
+            content: nodeContent,
+            contentDigest: createContentDigest(challenge),
+          },
+        },
+      );
+      createNode(node);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 export async function createPages({ graphql, actions: { createPage } }: CreatePagesArgs) {
   const { data } = await graphql<Queries.CreatePagesQuery>(`
@@ -23,6 +56,13 @@ export async function createPages({ graphql, actions: { createPage } }: CreatePa
       allDatoCmsEvent {
         nodes {
           slug
+        }
+      }
+      allChallenge {
+        nodes {
+          data {
+            id
+          }
         }
       }
     }
@@ -64,6 +104,16 @@ export async function createPages({ graphql, actions: { createPage } }: CreatePa
         path: `/blog/evenements/${slug}/`,
         component: path.resolve(`./src/templates/event.tsx`),
         context: { slug },
+      });
+    }
+  }
+
+  for (const node of data?.allChallenge.nodes || []) {
+    if (node.data?.id) {
+      createPage({
+        path: `/challenges/${node.data.id}/`,
+        component: path.resolve(`./src/templates/challenge.tsx`),
+        context: { id: node.data.id },
       });
     }
   }

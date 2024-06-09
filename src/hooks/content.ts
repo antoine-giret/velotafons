@@ -44,6 +44,7 @@ export function useContent({
     | Queries.MissionQueryFragment
     | Queries.BlogQueryFragment
     | Queries.ContactQueryFragment
+    | Queries.ChallengesQueryFragment
     | null;
 }) {
   const [elements] = useState<Array<TEle>>(() => {

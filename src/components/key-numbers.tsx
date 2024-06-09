@@ -4,6 +4,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { IoBicycle, IoLeaf, IoLogoInstagram, IoLogoLinkedin, IoPeople } from 'react-icons/io5';
 
+import { GeogroupService } from '../services';
 import { formatNumber, toDistance } from '../utils/units';
 
 import { Links } from './links';
@@ -38,22 +39,9 @@ function KeyNumbers({
 
   async function getGeoveloData() {
     try {
-      const res = await fetch(`https://backend.geovelo.fr/api/v4/geogroups/2708?`, {
-        headers: [
-          ['authorization', process.env.GATSBY_GEOVELO_AUTHORIZATION || ''],
-          ['api-key', process.env.GATSBY_GEOVELO_API_KEY || ''],
-          ['source', process.env.GATSBY_GEOVELO_SOURCE || ''],
-        ],
-      });
-      if (res.status !== 200) throw new Error('Geovelo data recovery failed');
-      const { total_members, total_distance } = await res.json();
+      const { members, distance, saved_co2 } = await GeogroupService.getGeogroup();
 
-      setValues({
-        ...values,
-        members: total_members,
-        distance: total_distance,
-        saved_co2: Math.round((total_distance / 1000) * 0.2176),
-      });
+      setValues({ ...values, members, distance, saved_co2 });
     } catch (err) {
       console.error(err);
     }

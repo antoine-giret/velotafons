@@ -14,8 +14,8 @@ export function Card({
   actions,
 }: {
   actions?: JSX.Element | null;
-  description?: string;
-  image: IGatsbyImageData;
+  description?: string | null;
+  image: IGatsbyImageData | string;
   imageAlt: string;
   imagePosition: 'left' | 'right' | 'top';
   subtitle?: JSX.Element;
@@ -49,7 +49,17 @@ export function Card({
         overflow="hidden"
         width={imagePosition === 'top' ? '100%' : ['100%', '100%', 300]}
       >
-        <GatsbyImage alt={imageAlt} image={image} objectFit="cover" style={{ height: '100%' }} />
+        {typeof image === 'string' ? (
+          <Box
+            aspectRatio={16 / 9}
+            backgroundImage={`url(${image})`}
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+          />
+        ) : (
+          <GatsbyImage alt={imageAlt} image={image} objectFit="cover" style={{ height: '100%' }} />
+        )}
       </Box>
       <Box
         display="flex"
