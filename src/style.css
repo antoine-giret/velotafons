@@ -8,4 +8,10 @@ div.chakra-text:not(.webkit-box) {
   a {
     text-decoration: underline;
   }
+
+  blockquote {
+    border-left: 2px solid var(--chakra-colors-primary-500);
+    font-style: italic;
+    padding-left: 16px;
+  }
 }

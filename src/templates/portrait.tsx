@@ -50,7 +50,12 @@ function PortraitTemplate({
           )}
         </Box>
       </Box>
-      <Box display="flex" flexDirection={['column', 'column', 'row']} gap={5}>
+      <Box
+        alignItems={['stretch', 'stretch', 'flex-start']}
+        display="flex"
+        flexDirection={['column', 'column', 'row']}
+        gap={5}
+      >
         {image && (
           <Box
             border="1px solid #eee"
