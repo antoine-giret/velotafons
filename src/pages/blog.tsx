@@ -318,7 +318,7 @@ export const query = graphql`
         ...BlogHubIllustration
       }
     }
-    allDatoCmsPortrait {
+    allDatoCmsPortrait(filter: { onlyForAllOfFame: { ne: true } }) {
       nodes {
         ...BlogHubPortrait
       }

@@ -16,7 +16,7 @@ type TEle = {
 function getElement(
   block: Queries.HeroFragment | Queries.KeyNumbersFragment,
 ): { data: { id: string }; Ele: (props: { data: { id: string } }) => JSX.Element } | null {
-  switch (block.internal.type) {
+  switch (block.internal?.type) {
     case 'DatoCmsHero':
       return { Ele: Hero as never, data: block };
     case 'DatoCmsKeyNumbersBlock':
