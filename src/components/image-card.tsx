@@ -22,6 +22,7 @@ function ImageCard({
       description={description ? converter.makeHtml(description) : undefined}
       image={image}
       imageAlt={_image.alt || ''}
+      imageFocalPoint={_image.focalPoint}
       imagePosition={imagePosition === 'right' ? 'right' : 'left'}
       tag="Conseils"
       title={title}
@@ -41,6 +42,10 @@ export const query = graphql`
     description
     image {
       gatsbyImageData(aspectRatio: 1, width: 688)
+      focalPoint {
+        x
+        y
+      }
       alt
     }
     imagePosition

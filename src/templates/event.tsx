@@ -119,6 +119,10 @@ export const query = graphql`
       image {
         originalId
         gatsbyImageData(aspectRatio: 1.6, width: 1000)
+        focalPoint {
+          x
+          y
+        }
         alt
         url
       }

@@ -22,6 +22,7 @@ export function GoodAddressCard({
       description={description ? converter.makeHtml(description) : undefined}
       image={image}
       imageAlt={photos[0].alt || ''}
+      imageFocalPoint={photos[0].focalPoint}
       imagePosition="top"
       key={slug}
       tag="Bonnes adresses"

@@ -47,6 +47,10 @@ export const query = graphql`
       presentation
       picture {
         gatsbyImageData(aspectRatio: 1, width: 688)
+        focalPoint {
+          x
+          y
+        }
         alt
       }
     }

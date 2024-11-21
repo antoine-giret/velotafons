@@ -43,6 +43,7 @@ function HighlightedIllustration({
       description={description ? converter.makeHtml(description) : undefined}
       image={image}
       imageAlt={_image.alt || ''}
+      imageFocalPoint={_image.focalPoint}
       imagePosition={imagePosition === 'right' ? 'right' : 'left'}
       key={slug}
       tag="Illustrations"
@@ -64,6 +65,10 @@ export const query = graphql`
       title
       illustration {
         gatsbyImageData(aspectRatio: 1, width: 688)
+        focalPoint {
+          x
+          y
+        }
         alt
       }
       description

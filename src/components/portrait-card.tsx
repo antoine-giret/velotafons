@@ -30,6 +30,7 @@ export function PortraitCard({
       description={presentation ? converter.makeHtml(presentation) : undefined}
       image={image}
       imageAlt={picture.alt || ''}
+      imageFocalPoint={picture.focalPoint}
       imagePosition={imagePosition}
       key={slug}
       tag="Portraits de vélotafeurs"

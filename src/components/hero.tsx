@@ -32,6 +32,11 @@ function Hero({
             alt={_backgroundImage.alt || ''}
             image={backgroundImage}
             objectFit="cover"
+            objectPosition={
+              _backgroundImage.focalPoint
+                ? `${_backgroundImage.focalPoint.x * 100}% ${_backgroundImage.focalPoint.y * 100}%`
+                : '50% 50%'
+            }
             style={{ height: '100%' }}
           />
         </Box>
@@ -103,6 +108,10 @@ export const query = graphql`
     backgroundImage {
       alt
       gatsbyImageData(layout: FULL_WIDTH, placeholder: DOMINANT_COLOR)
+      focalPoint {
+        x
+        y
+      }
       url
     }
     title

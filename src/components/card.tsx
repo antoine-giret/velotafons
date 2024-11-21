@@ -6,6 +6,7 @@ export function Card({
   variant,
   imagePosition,
   image,
+  imageFocalPoint,
   imageAlt,
   tag,
   title,
@@ -17,6 +18,10 @@ export function Card({
   description?: string | null;
   image: IGatsbyImageData | string;
   imageAlt: string;
+  imageFocalPoint?: {
+    readonly x: number;
+    readonly y: number;
+  } | null;
   imagePosition: 'left' | 'right' | 'top';
   subtitle?: JSX.Element;
   tag?: string;
@@ -58,7 +63,17 @@ export function Card({
             backgroundSize="cover"
           />
         ) : (
-          <GatsbyImage alt={imageAlt} image={image} objectFit="cover" style={{ height: '100%' }} />
+          <GatsbyImage
+            alt={imageAlt}
+            image={image}
+            objectFit="cover"
+            objectPosition={
+              imageFocalPoint
+                ? `${imageFocalPoint.x * 100}% ${imageFocalPoint.y * 100}%`
+                : '50% 50%'
+            }
+            style={{ height: '100%' }}
+          />
         )}
       </Box>
       <Box

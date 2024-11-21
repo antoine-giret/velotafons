@@ -20,6 +20,7 @@ export function EventCard({ data }: { data: Queries.BlogHubEventFragment }): JSX
       description={description ? converter.makeHtml(description) : undefined}
       image={image}
       imageAlt={_image.alt || ''}
+      imageFocalPoint={_image.focalPoint}
       imagePosition="top"
       key={slug}
       subtitle={

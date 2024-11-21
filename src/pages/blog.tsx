@@ -260,6 +260,10 @@ export const query = graphql`
     publicationDate
     illustration {
       gatsbyImageData(aspectRatio: 1.6, width: 688)
+      focalPoint {
+        x
+        y
+      }
       alt
     }
     description
@@ -271,6 +275,10 @@ export const query = graphql`
     presentation
     picture {
       gatsbyImageData(aspectRatio: 1.6, width: 688)
+      focalPoint {
+        x
+        y
+      }
       alt
     }
   }
@@ -283,6 +291,10 @@ export const query = graphql`
     description
     photos {
       gatsbyImageData(aspectRatio: 1.6, width: 688)
+      focalPoint {
+        x
+        y
+      }
       alt
     }
   }
@@ -295,6 +307,10 @@ export const query = graphql`
     description
     image {
       gatsbyImageData(aspectRatio: 1.6, width: 688)
+      focalPoint {
+        x
+        y
+      }
       alt
     }
   }

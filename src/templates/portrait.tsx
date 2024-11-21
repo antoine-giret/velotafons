@@ -180,6 +180,10 @@ export const query = graphql`
     photo {
       alt
       gatsbyImageData(aspectRatio: 1.6, width: 768)
+      focalPoint {
+        x
+        y
+      }
     }
   }
   query Portrait($slug: String!) {
@@ -194,6 +198,10 @@ export const query = graphql`
       presentation
       picture {
         gatsbyImageData(aspectRatio: 1, width: 768)
+        focalPoint {
+          x
+          y
+        }
         alt
         url
       }

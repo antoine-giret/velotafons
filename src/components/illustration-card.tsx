@@ -22,6 +22,7 @@ export function IllustrationCard({
       description={description ? converter.makeHtml(description) : undefined}
       image={image}
       imageAlt={illustration.alt || ''}
+      imageFocalPoint={illustration.focalPoint}
       imagePosition="top"
       key={slug}
       tag="Illustration"
