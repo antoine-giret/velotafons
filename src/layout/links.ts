@@ -27,6 +27,6 @@ export const socialLinks: Array<{ Icon: IconType; key: string; href: string; lab
     key: 'discord',
     Icon: IoLogoDiscord,
     label: 'Discord',
-    href: 'https://discord.gg/RwAzPgxJEX/',
+    href: 'https://discord.gg/tUKdfjMR7P/',
   },
 ];
